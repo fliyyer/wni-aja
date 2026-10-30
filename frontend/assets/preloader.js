@@ -135,55 +135,53 @@
       }
       .preloader-card {
         width: 100%;
-        max-width: 440px;
-        background: #fff8e8;
+        max-width: 380px;
+        background: #ffffff;
         color: #161412;
         border: 4px solid #161412;
         border-radius: 1.25rem;
         box-shadow: 8px 8px 0px #161412;
-        padding: 1.5rem;
+        padding: 1.75rem 1.5rem;
         text-align: center;
-        backdrop-filter: blur(4px);
       }
       .preloader-badge {
         display: inline-block;
-        background: #ffd23f;
+        background: #e63946;
+        color: #ffffff;
         border: 2px solid #161412;
-        font-size: 0.72rem;
+        font-size: 0.75rem;
         font-weight: 800;
-        text-transform: uppercase;
-        padding: 0.25rem 0.65rem;
-        border-radius: 9999px;
-        margin-bottom: 0.75rem;
-        box-shadow: 2px 2px 0px #161412;
+        padding: 0.2rem 0.6rem;
+        border-radius: 0.5rem;
+        margin-bottom: 0.5rem;
       }
       .preloader-title {
-        font-size: 1.35rem;
+        font-size: 1.75rem;
         font-weight: 900;
-        letter-spacing: -0.02em;
+        letter-spacing: -0.03em;
         margin-bottom: 0.25rem;
-        line-height: 1.2;
+        line-height: 1.1;
       }
       .preloader-subtitle {
         font-size: 0.82rem;
-        color: #555;
-        margin-bottom: 1.2rem;
+        color: #666;
+        margin-bottom: 1.25rem;
         font-weight: 500;
       }
       .preloader-bar-bg {
         width: 100%;
-        height: 1.2rem;
-        background: #ecd7a9;
+        height: 1.25rem;
+        background: #f1f5f9;
         border: 3px solid #161412;
         border-radius: 9999px;
         overflow: hidden;
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.6rem;
         position: relative;
       }
       .preloader-bar-fill {
         height: 100%;
         width: 0%;
-        background: #2a9d8f;
+        background: #e63946;
         border-right: 3px solid #161412;
         transition: width 0.1s ease-out;
       }
@@ -193,39 +191,27 @@
         align-items: center;
         font-size: 0.75rem;
         font-weight: 800;
-        color: #333;
-      }
-      .preloader-satir {
-        margin-top: 1rem;
-        padding-top: 0.75rem;
-        border-top: 2px dashed #d5caa9;
-        font-size: 0.75rem;
-        color: #666;
-        font-weight: 600;
+        color: #475569;
       }
     `;
     document.head.appendChild(style);
-
-    const initialTip = SATIR_TIPS[Math.floor(Math.random() * SATIR_TIPS.length)];
 
     const overlay = document.createElement("div");
     overlay.id = "wni-preloader";
     overlay.innerHTML = `
       <div class="preloader-card">
-        <span class="preloader-badge">🇮🇩 Loket Pelayanan Terpadu</span>
-        <h2 class="preloader-title">Memverifikasi KTP & Berkas</h2>
-        <p class="preloader-subtitle">Sinkronisasi 88 audio & aset ke perangkat agar game bebas delay.</p>
+        <span class="preloader-badge">Board game satir</span>
+        <h2 class="preloader-title">LAH LU WNI?</h2>
+        <p class="preloader-subtitle">Memuat aset permainan...</p>
         
         <div class="preloader-bar-bg">
           <div class="preloader-bar-fill" id="wni-bar"></div>
         </div>
         
         <div class="preloader-stats">
-          <span id="wni-status">Menghubungkan ke Dukcapil...</span>
+          <span id="wni-status">Menyiapkan aset...</span>
           <span id="wni-pct">0%</span>
         </div>
-
-        <div class="preloader-satir" id="wni-tip">${initialTip}</div>
       </div>
     `;
     document.body.appendChild(overlay);
@@ -237,13 +223,6 @@
     const overlay = createPreloaderOverlay();
     const bar = document.getElementById("wni-bar");
     const pct = document.getElementById("wni-pct");
-    const status = document.getElementById("wni-status");
-    const tip = document.getElementById("wni-tip");
-
-    let tipTimer = setInterval(() => {
-      if (tip) tip.textContent = SATIR_TIPS[Math.floor(Math.random() * SATIR_TIPS.length)];
-    }, 2500);
-
     let loaded = 0;
     const total = AUDIO_FILES.length;
     const CONCURRENCY = 6;
@@ -275,7 +254,7 @@
         const percent = Math.round((loaded / total) * 100);
         if (bar) bar.style.width = percent + "%";
         if (pct) pct.textContent = percent + "%";
-        if (status) status.textContent = `${loaded}/${total} Berkas`;
+        if (status) status.textContent = `Memuat suara & aset (${loaded}/${total})`;
       }
     }
 
@@ -285,14 +264,12 @@
     }
 
     await Promise.all(workers);
-    clearInterval(tipTimer);
 
     sessionStorage.setItem("wni_assets_cached", "1");
 
     if (bar) bar.style.width = "100%";
     if (pct) pct.textContent = "100%";
-    if (status) status.textContent = "Berkas Lengkap!";
-    if (tip) tip.textContent = "✅ Dokumen sah! Masuk ke permainan...";
+    if (status) status.textContent = "Siap dimainkan!";
 
     // Otomatis langsung masuk ke game begitu 100% tanpa klik tombol
     setTimeout(() => {
