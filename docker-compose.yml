@@ -1,0 +1,12 @@
+services:
+  wni-simulator:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: wni-simulator
+    restart: unless-stopped
+    ports:
+      - "2567:2567"
+    environment:
+      - PORT=2567
+      - NODE_ENV=production

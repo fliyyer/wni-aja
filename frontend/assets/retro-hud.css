@@ -1,0 +1,253 @@
+/* ==========================================================================
+   WNI SIMULATOR - RETRO ARCADE HUD STYLESHEET
+   16-bit / 90s Arcade Console HUD Aesthetic
+   ========================================================================== */
+
+/* 1. Self-hosted Retro Fonts */
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url('/assets/press-start-2p.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'VT323';
+  src: url('/assets/vt323.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-retro-arcade: 'Press Start 2P', monospace;
+  --font-retro-digital: 'VT323', monospace;
+  --retro-gold: #ffd23f;
+  --retro-green: #39ff14;
+  --retro-cyan: #00f0ff;
+  --retro-crimson: #e5383b;
+  --retro-panel-bg: #fffbf0;
+  --retro-border: #161412;
+}
+
+/* 2. Top Bar & Game State Badges */
+/* Round Badge */
+div.pointer-events-auto.flex.items-center span.brut {
+  font-family: var(--font-retro-arcade) !important;
+  font-size: 0.65rem !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  border-width: 3px !important;
+  border-radius: 4px !important;
+  box-shadow: 3px 3px 0 0 var(--retro-border) !important;
+  padding: 5px 10px !important;
+}
+
+/* Top Bar Action Buttons (Log, Menu, Settings) */
+div.pointer-events-auto.flex.items-center button {
+  font-family: var(--font-retro-arcade) !important;
+  font-size: 0.58rem !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  border-width: 3px !important;
+  border-radius: 4px !important;
+  box-shadow: 3px 3px 0 0 var(--retro-border) !important;
+  transition: transform 60ms ease-out, box-shadow 60ms ease-out !important;
+}
+
+div.pointer-events-auto.flex.items-center button:active {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 1px 1px 0 0 var(--retro-border) !important;
+}
+
+/* 3. Player Leaderboard / Status Strip (Left / Top HUD) */
+ol.pointer-events-none.flex li {
+  border-width: 3px !important;
+  border-radius: 4px !important;
+  box-shadow: 3px 3px 0 0 var(--retro-border) !important;
+  background-color: var(--retro-panel-bg) !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+/* Kas Negara Card */
+ol.pointer-events-none.flex li:first-child {
+  background-color: #d90429 !important;
+  color: #fff8e8 !important;
+  box-shadow: 3px 3px 0 0 var(--retro-border) !important;
+}
+
+ol.pointer-events-none.flex li:first-child p:first-child {
+  font-family: var(--font-retro-arcade) !important;
+  font-size: 0.55rem !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
+
+ol.pointer-events-none.flex li:first-child p:last-child {
+  font-family: var(--font-retro-digital) !important;
+  font-size: 1.3rem !important;
+  line-height: 1.1 !important;
+  letter-spacing: 0.06em !important;
+  color: #ffd23f !important;
+  text-shadow: 1px 1px 0 #000 !important;
+}
+
+/* Player Names & Cash */
+ol.pointer-events-none.flex li p.font-bold {
+  font-family: "Space Grotesk Variable", sans-serif !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.03em !important;
+}
+
+ol.pointer-events-none.flex li p.tabular-nums {
+  font-family: var(--font-retro-digital) !important;
+  font-size: 1.35rem !important;
+  line-height: 1.1 !important;
+  letter-spacing: 0.06em !important;
+  color: #111 !important;
+}
+
+/* Active Player Glow & Stepped Indicator */
+ol.pointer-events-none.flex li[aria-current="true"] {
+  border-color: var(--retro-border) !important;
+  box-shadow: 0 0 0 2px var(--retro-gold), 5px 5px 0 0 var(--retro-border) !important;
+  transform: scale(1.02) !important;
+}
+
+ol.pointer-events-none.flex li[aria-current="true"] p.tabular-nums {
+  color: #007f3f !important;
+  text-shadow: 0 0 1px rgba(0, 127, 63, 0.4) !important;
+}
+
+/* 4. Bottom Dice Roll Console & Timing Bar */
+section[aria-label*="Lempar dadu"] {
+  border: 4px solid var(--retro-border) !important;
+  border-radius: 6px !important;
+  background-color: var(--retro-panel-bg) !important;
+  box-shadow: inset -2px -2px 0 0 #dcd0bc, inset 2px 2px 0 0 #ffffff, 6px 6px 0 0 var(--retro-border) !important;
+  background-image: repeating-linear-gradient(0deg, rgba(22, 20, 18, 0.03) 0px, rgba(22, 20, 18, 0.03) 1px, transparent 1px, transparent 4px) !important;
+  padding: 12px 14px !important;
+}
+
+/* Power Meter Timing Bar Container */
+section[aria-label*="Lempar dadu"] div.flex.h-7,
+section[aria-label*="Lempar dadu"] div.sm\:h-8 {
+  border: 3px solid var(--retro-border) !important;
+  border-radius: 4px !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  overflow: hidden !important;
+}
+
+/* Power Meter Needle */
+section[aria-label*="Lempar dadu"] div.absolute.-top-1\.5 {
+  width: 8px !important;
+  background-color: var(--retro-border) !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Timing Bar Segments Typography */
+section[aria-label*="Lempar dadu"] div.grid.place-items-center {
+  font-family: var(--font-retro-arcade) !important;
+  font-size: 0.55rem !important;
+  letter-spacing: 0.04em !important;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6) !important;
+}
+
+/* "Kocok Dadu" Button */
+section[aria-label*="Lempar dadu"] button[aria-label*="Kocok dadu"] {
+  font-family: var(--font-retro-arcade) !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  border: 3px solid var(--retro-border) !important;
+  border-radius: 4px !important;
+  background-color: var(--retro-gold) !important;
+  color: var(--retro-border) !important;
+  box-shadow: inset -2px -2px 0 0 #c29500, inset 2px 2px 0 0 #fff3a8, 4px 4px 0 0 var(--retro-border) !important;
+  transition: transform 60ms ease-out, box-shadow 60ms ease-out !important;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}
+
+section[aria-label*="Lempar dadu"] button[aria-label*="Kocok dadu"]:hover:not(:disabled) {
+  background-color: #ffe066 !important;
+}
+
+section[aria-label*="Lempar dadu"] button[aria-label*="Kocok dadu"]:active:not(:disabled) {
+  transform: translate(3px, 3px) !important;
+  box-shadow: inset 2px 2px 0 0 #c29500, 1px 1px 0 0 var(--retro-border) !important;
+}
+
+/* 5. In-Game Modals, Dialogs & Action Cards */
+dialog {
+  border: 4px solid var(--retro-border) !important;
+  border-radius: 6px !important;
+  box-shadow: inset -2px -2px 0 0 #dcd0bc, inset 2px 2px 0 0 #ffffff, 6px 6px 0 0 var(--retro-border) !important;
+  background-color: var(--retro-panel-bg) !important;
+}
+
+dialog h2,
+dialog h3 {
+  font-family: var(--font-retro-arcade) !important;
+  font-size: 0.8rem !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  color: var(--retro-border) !important;
+}
+
+dialog button {
+  border-radius: 4px !important;
+}
+
+/* Turn Announcement Banner */
+p.animate-slam,
+div.animate-turn-banner p {
+  font-family: var(--font-retro-arcade) !important;
+  border-width: 4px !important;
+  border-radius: 4px !important;
+  box-shadow: 4px 4px 0 0 var(--retro-border) !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* 6. Subtle Retro CRT Scanline & Grain Overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.035) 0px,
+    rgba(0, 0, 0, 0.035) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  opacity: 0.85;
+}
+
+/* 7. Responsive Mobile HUD Adjustments */
+@media (max-width: 640px) {
+  div.pointer-events-auto.flex.items-center span.brut {
+    font-size: 0.55rem !important;
+    padding: 3px 6px !important;
+  }
+  
+  div.pointer-events-auto.flex.items-center button {
+    font-size: 0.52rem !important;
+    padding: 3px 6px !important;
+  }
+
+  ol.pointer-events-none.flex li p.tabular-nums {
+    font-size: 1.15rem !important;
+  }
+
+  section[aria-label*="Lempar dadu"] button[aria-label*="Kocok dadu"] {
+    font-size: 0.68rem !important;
+  }
+}

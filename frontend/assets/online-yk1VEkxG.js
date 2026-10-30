@@ -1,0 +1,1 @@
+var e=`game`,t=[`mampus`,`sabar`,`pajak-lagi`,`orang-dalam`,`bayar-dulu`,`wkwk`,`healing`,`sultan`,`nangis`,`gas`,`ampun`,`pinjol`],n=[5e6,1e7,15e6],r=[10,15,20];export{t as i,e as n,r,n as t};

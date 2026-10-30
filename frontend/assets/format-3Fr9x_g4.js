@@ -1,0 +1,1 @@
+var e=new Intl.NumberFormat(`id-ID`,{maximumFractionDigits:1});function t(t){let n=t<0?`-`:``,r=Math.abs(t);return r>=1e6?`${n}Rp${e.format(r/1e6)} jt`:r>=1e3?`${n}Rp${e.format(r/1e3)} rb`:`${n}Rp${r}`}export{t};

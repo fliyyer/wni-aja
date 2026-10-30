@@ -1,0 +1,561 @@
+/* ==========================================================================
+   LAH LU WNI? - COMPLETE RETRO ARCADE THEME
+   Authentic 80s/90s Arcade Cabinet, 16-bit RPG & CRT Console UI System
+   ========================================================================== */
+
+/* 1. Retro Pixel & Terminal Font Definitions */
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url('/assets/press-start-2p.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'VT323';
+  src: url('/assets/vt323.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 2. Global Design Tokens & Variables */
+:root {
+  --color-ink: #f8fafc;
+  --color-paper: #1e293b;
+  --color-sky: #06b6d4;
+  --color-sand: #fef08a;
+  --color-sun: #f59e0b;
+  --color-merah: #ef4444;
+  --color-daun: #10b981;
+  --color-muted: #94a3b8;
+  --color-takdir: #00f0ff;
+  --color-simpanan: #a855f7;
+
+  /* Arcade Dark Cabinet Palette */
+  --retro-chassis: #0b0f19;
+  --retro-surface: #111827;
+  --retro-surface-light: #1e293b;
+  --retro-border: #374151;
+  --retro-gold: #fbbf24;
+  --retro-neon-cyan: #38bdf8;
+  --retro-neon-green: #34d399;
+  --retro-neon-red: #f87171;
+
+  /* Fonts */
+  --font-display: 'Press Start 2P', monospace, sans-serif !important;
+  --font-mono: 'VT323', monospace !important;
+  --font-sans: "Space Grotesk Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+
+  /* Hard Arcade Pixel Drop Shadows */
+  --shadow-brut: 4px 4px 0 0 #000000 !important;
+  --shadow-brut-lg: 6px 6px 0 0 #000000 !important;
+  --shadow-brut-sm: 2px 2px 0 0 #000000 !important;
+}
+
+/* 3. Global Canvas & Background Texture (CRT Ambient) */
+body {
+  background-color: var(--retro-chassis) !important;
+  background-image: 
+    radial-gradient(circle at 50% 20%, #1e293b 0%, #0b0f19 80%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0px, rgba(0, 0, 0, 0.2) 1px, transparent 1px, transparent 3px) !important;
+  color: #f8fafc !important;
+  font-family: var(--font-sans);
+  text-rendering: pixelated;
+  -webkit-font-smoothing: antialiased;
+}
+
+main.bg-sky {
+  background: radial-gradient(circle at 50% 30%, #1e293b 0%, #0b0f19 85%) !important;
+  background-image: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.12) 0px, rgba(0, 0, 0, 0.12) 1px, transparent 1px, transparent 3px) !important;
+}
+
+/* 4. Global Typography Overrides */
+.font-display {
+  font-family: 'Press Start 2P', monospace !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* Numerical scoreboard outputs */
+.tabular-nums, output.tabular-nums {
+  font-family: 'VT323', monospace !important;
+  font-size: 1.35em !important;
+  letter-spacing: 0.06em !important;
+  line-height: 1 !important;
+}
+
+.text-ink {
+  color: #f8fafc !important;
+}
+
+.text-muted {
+  color: #94a3b8 !important;
+}
+
+.border-ink {
+  border-color: #374151 !important;
+}
+
+.border-3, [class*="border-3"] {
+  border-width: 2px !important;
+  border-color: #374151 !important;
+}
+
+.border-2, [class*="border-2"] {
+  border-width: 2px !important;
+  border-color: #374151 !important;
+}
+
+/* Surfaces */
+.bg-paper {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #374151 !important;
+}
+
+.bg-paper\/80, .bg-paper\/90 {
+  background-color: rgba(30, 41, 59, 0.88) !important;
+  color: #f8fafc !important;
+}
+
+/* Inputs & Form Controls */
+input, textarea, select {
+  background-color: #0b0f19 !important;
+  color: #f8fafc !important;
+  border: 2px solid #374151 !important;
+  border-radius: 6px !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #38bdf8 !important;
+  outline: none !important;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.4) !important;
+}
+
+/* 5. Home Landing Screen: Retro Arcade Title & Hero */
+h1.font-display {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: clamp(1.5rem, 5.5vw, 2.7rem) !important;
+  color: #fbbf24 !important;
+  text-shadow: 4px 4px 0 #dc2626, 8px 8px 0 #000000 !important;
+  letter-spacing: 0.05em !important;
+  line-height: 1.3 !important;
+  text-align: center;
+}
+
+/* Retro Pill Badge on Hero (Board Game Satir) */
+span.bg-merah {
+  background-color: #e11d48 !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 3px 3px 0 0 #000000 !important;
+  border-radius: 4px !important;
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.08em !important;
+  color: #ffffff !important;
+  text-transform: uppercase !important;
+}
+
+/* Subtitle description */
+main p.font-medium {
+  color: #cbd5e1 !important;
+  font-size: 0.85rem !important;
+  line-height: 1.6 !important;
+  text-shadow: 1px 1px 0 #000 !important;
+}
+
+/* Home Screen Character Avatars with 8-bit Frames */
+main div.flex.-space-x-3 span {
+  border: 3px solid #000000 !important;
+  box-shadow: 3px 3px 0 #000000 !important;
+  border-radius: 8px !important;
+  transition: transform 0.15s ease !important;
+}
+main div.flex.-space-x-3 span:hover {
+  transform: translateY(-4px) scale(1.1) !important;
+  z-index: 10 !important;
+}
+
+/* 6. Retro Arcade Buttons & Interactions */
+.brut {
+  border: 3px solid #000000 !important;
+  box-shadow: 4px 4px 0 0 #000000 !important;
+  border-radius: 6px !important;
+}
+
+.brut-press {
+  border: 2px solid #000000 !important;
+  box-shadow: 0 4px 0 #000000, 0 6px 12px rgba(0, 0, 0, 0.4) !important;
+  border-radius: 6px !important;
+  transition: transform 60ms steps(2), box-shadow 60ms steps(2) !important;
+  cursor: pointer !important;
+  font-weight: 700 !important;
+}
+
+.brut-press:hover:not(:disabled) {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 5px 0 #000000, 0 8px 16px rgba(0, 0, 0, 0.5) !important;
+}
+
+.brut-press:active:not(:disabled) {
+  transform: translateY(4px) !important;
+  box-shadow: 0 0 0 #000000 !important;
+}
+
+/* Menu Navigation Buttons */
+nav.grid a.brut-press {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.05em !important;
+  padding: 16px 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  text-transform: uppercase !important;
+}
+
+nav a.bg-sun, .bg-sun {
+  background: linear-gradient(180deg, #f59e0b 0%, #b45309 100%) !important;
+  color: #000000 !important;
+  text-shadow: none !important;
+  border-color: #78350f !important;
+}
+
+nav a.bg-paper {
+  background: #1f2937 !important;
+  color: #f8fafc !important;
+  border-color: #374151 !important;
+}
+
+nav a.bg-paper:hover {
+  background: #374151 !important;
+}
+
+/* Footer / Bottom nav row buttons */
+nav.grid div.grid a {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 0.6rem !important;
+  padding: 12px 6px !important;
+}
+
+/* 7. In-Game Retro Arcade Top Marquee Bar */
+div.pointer-events-auto.flex.items-center {
+  background: #111827 !important;
+  border: 2px solid #374151 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 0 #000000, 0 8px 16px rgba(0, 0, 0, 0.6) !important;
+  padding: 6px 10px !important;
+}
+
+/* Round / Turn Counter styled like "STAGE 01" */
+div.pointer-events-auto.flex.items-center span.brut {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 0.62rem !important;
+  background: #1f2937 !important;
+  color: #fbbf24 !important;
+  border: 2px solid #4b5563 !important;
+  border-radius: 4px !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6), 2px 2px 0 #000 !important;
+  padding: 6px 12px !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* Settings & Audio Toggles */
+div.pointer-events-auto.flex.items-center button {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 0.55rem !important;
+  background: #374151 !important;
+  color: #e5e7eb !important;
+  border: 2px solid #1f2937 !important;
+  border-radius: 4px !important;
+  box-shadow: 0 2px 0 #000000 !important;
+  padding: 6px 10px !important;
+}
+
+div.pointer-events-auto.flex.items-center button:hover {
+  background: #4b5563 !important;
+  color: #ffffff !important;
+}
+
+/* 8. Retro Arcade Player HUD Strip (Scoreboards) */
+ol.pointer-events-none.flex li {
+  background: #111827 !important;
+  border: 2px solid #374151 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 0 #000000, 0 6px 12px rgba(0, 0, 0, 0.4) !important;
+  padding: 8px 12px !important;
+  color: #f3f4f6 !important;
+  transition: all 0.15s ease !important;
+}
+
+ol.pointer-events-none.flex li span.font-bold {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.03em !important;
+}
+
+/* Active Player Turn Highlight (Flashing Arcade Indicator) */
+ol.pointer-events-none.flex li[aria-current="true"] {
+  border-color: #fbbf24 !important;
+  background: #1e293b !important;
+  box-shadow: 0 0 0 2px #f59e0b, 0 4px 0 #000000, 0 0 16px rgba(245, 158, 11, 0.5) !important;
+  transform: scale(1.04) !important;
+}
+
+/* Player Cash Display (Glowing 8-bit Emerald Money) */
+ol.pointer-events-none.flex li p.tabular-nums {
+  font-family: 'VT323', monospace !important;
+  font-size: 1.4rem !important;
+  letter-spacing: 0.05em !important;
+  color: #34d399 !important;
+  text-shadow: 0 0 8px rgba(52, 211, 153, 0.4) !important;
+}
+
+/* 9. Retro Arcade Control Deck (Lempar Dadu) */
+section[aria-label*="Lempar dadu"] {
+  background: #111827 !important;
+  border: 3px solid #374151 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 6px 0 #000000, 0 12px 28px rgba(0, 0, 0, 0.7) !important;
+  padding: 16px !important;
+  color: #f8fafc !important;
+}
+
+/* Segmented 8-Bit LED Power Bar */
+section[aria-label*="Lempar dadu"] div.flex.h-7,
+section[aria-label*="Lempar dadu"] div.sm\:h-8 {
+  background: #090d16 !important;
+  border: 2px solid #374151 !important;
+  border-radius: 4px !important;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.9) !important;
+  overflow: hidden !important;
+  background-image: repeating-linear-gradient(90deg, transparent 0 6px, #090d16 6px 8px) !important;
+}
+
+section[aria-label*="Lempar dadu"] div.absolute.-top-1\.5 {
+  width: 8px !important;
+  border-radius: 2px !important;
+  background-color: #fbbf24 !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 0 8px #fbbf24 !important;
+}
+
+/* Giant Arcade Pushbutton ("KOCOK DADU") */
+section[aria-label*="Lempar dadu"] button[aria-label*="Kocok dadu"] {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 0.8rem !important;
+  background: linear-gradient(180deg, #f59e0b 0%, #b45309 100%) !important;
+  color: #ffffff !important;
+  border: 2px solid #78350f !important;
+  border-radius: 8px !important;
+  box-shadow: 0 5px 0 #451a03, 0 8px 16px rgba(0, 0, 0, 0.5) !important;
+  text-shadow: 1px 1px 0 #78350f !important;
+  letter-spacing: 0.05em !important;
+  padding-top: 14px !important;
+  padding-bottom: 14px !important;
+  text-transform: uppercase !important;
+}
+
+section[aria-label*="Lempar dadu"] button[aria-label*="Kocok dadu"]:hover:not(:disabled) {
+  background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%) !important;
+  box-shadow: 0 6px 0 #451a03, 0 10px 20px rgba(245, 158, 11, 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+
+section[aria-label*="Lempar dadu"] button[aria-label*="Kocok dadu"]:active:not(:disabled) {
+  transform: translateY(5px) !important;
+  box-shadow: 0 0 0 #451a03 !important;
+}
+
+/* Secondary Button in Console */
+section[aria-label*="Lempar dadu"] button:not([aria-label*="Kocok dadu"]) {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 0.65rem !important;
+  border-radius: 6px !important;
+  border: 2px solid #000000 !important;
+  box-shadow: 0 3px 0 #000000 !important;
+}
+
+/* 10. 16-Bit RPG Dialogue Box (Modals / Tanah Dijual / Pinjol / Lapas) */
+dialog {
+  background: #0f172a !important;
+  color: #f8fafc !important;
+  border: 3px solid #38bdf8 !important;
+  box-shadow: 0 0 0 2px #020617, 0 8px 0 #000000, 0 20px 50px rgba(0, 0, 0, 0.8) !important;
+  border-radius: 12px !important;
+  padding: 22px 24px !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin !important;
+}
+
+@media (max-width: 639px) {
+  dialog {
+    border-radius: 16px 16px 0 0 !important;
+    padding: 16px 18px !important;
+    max-height: 88vh !important;
+    border-bottom: none !important;
+  }
+}
+
+dialog::backdrop {
+  background: rgba(2, 6, 23, 0.8) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+dialog h2, dialog h3 {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 0.95rem !important;
+  color: #f8fafc !important;
+  letter-spacing: 0.03em !important;
+  line-height: 1.4 !important;
+}
+
+/* Cards & containers inside dialogue */
+dialog .bg-white {
+  background: #1e293b !important;
+  border: 2px solid #334155 !important;
+  color: #f1f5f9 !important;
+  border-radius: 8px !important;
+}
+
+dialog .bg-slate-50, dialog .bg-slate-50\/80, dialog .bg-slate-50\/70 {
+  background: #16202e !important;
+  border: 2px solid #334155 !important;
+  color: #e2e8f0 !important;
+  border-radius: 8px !important;
+}
+
+dialog .text-ink {
+  color: #f8fafc !important;
+}
+
+dialog .text-muted {
+  color: #94a3b8 !important;
+}
+
+/* Status colors in dialogue */
+dialog .border-slate-200, 
+dialog .border-slate-200\/80, 
+dialog .border-slate-200\/90,
+dialog .border-slate-100 {
+  border-color: #334155 !important;
+}
+
+dialog .bg-emerald-50\/70,
+dialog .bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.2) !important;
+  border-color: #10b981 !important;
+}
+
+dialog .text-emerald-600,
+dialog .text-emerald-700,
+dialog .text-emerald-800 {
+  color: #34d399 !important;
+  text-shadow: 0 0 6px rgba(52, 211, 153, 0.3) !important;
+}
+
+dialog .bg-emerald-200 {
+  background-color: #059669 !important;
+  color: #ffffff !important;
+}
+
+dialog .bg-amber-100 {
+  background-color: rgba(245, 158, 11, 0.25) !important;
+  border-color: #f59e0b !important;
+  color: #fef08a !important;
+}
+
+dialog .text-amber-600,
+dialog .text-amber-900 {
+  color: #fbbf24 !important;
+}
+
+dialog .bg-rose-50 {
+  background-color: rgba(239, 68, 68, 0.2) !important;
+  border-color: #ef4444 !important;
+  color: #fca5a5 !important;
+}
+
+dialog .text-rose-800,
+dialog .text-merah {
+  color: #f87171 !important;
+  text-shadow: 0 0 6px rgba(248, 113, 113, 0.3) !important;
+}
+
+/* Retro badges inside dialog */
+dialog dt span {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 0.55rem !important;
+}
+
+/* Dialog Action Buttons */
+dialog button {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.04em !important;
+  padding: 12px 14px !important;
+}
+
+/* 11. Modern/Retro Room Code & Lobby */
+span.shadow-brut.bg-ink {
+  background: #111827 !important;
+  border: 3px solid #38bdf8 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 6px 0 #000000 !important;
+  padding: 10px !important;
+}
+
+span.shadow-brut.bg-ink input {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 1.25rem !important;
+  letter-spacing: 0.25em !important;
+  color: #38bdf8 !important;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.4) !important;
+}
+
+span.shadow-brut.bg-ink span.text-paper\/70 {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 0.6rem !important;
+  color: #94a3b8 !important;
+}
+
+/* 12. Turn Notification Banner (Arcade Stage Callout) */
+p.animate-slam,
+div.animate-turn-banner p {
+  background: #111827 !important;
+  color: #fbbf24 !important;
+  border: 3px solid #f59e0b !important;
+  border-radius: 8px !important;
+  box-shadow: 0 6px 0 #000000, 0 0 20px rgba(245, 158, 11, 0.4) !important;
+  padding: 14px 28px !important;
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  text-align: center;
+}
+
+/* 13. Kartu Tanda WNI Modal */
+div.sticker {
+  filter: drop-shadow(3px 0 0 #000) drop-shadow(-3px 0 0 #000) drop-shadow(0 3px 0 #000) drop-shadow(0 -3px 0 #000) !important;
+}
+
+/* 14. Smooth Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0b0f19;
+}
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border: 1px solid #111827;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}

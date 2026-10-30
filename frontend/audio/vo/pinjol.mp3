@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Judul, deskripsi, ikon, dan pratinjau link dari src/seo.config.ts (vite.seo.ts). -->
+    <script type="module" crossorigin src="/assets/index-BMG9sYTX.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/jsx-runtime-Wy9s6hX0.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-zEplNvKg.css">
+    <title>Warga +62: Board Game Satir Bertahan Hidup di Indonesia</title>
+    <meta name="description" content="Board game satir gratis di browser. Keliling 36 kota dengan modal Rp10 jt, bayar sewa, pajak, dan tol, lalu bertahan dari kartu Takdir dan Musibah. Main bergantian di satu HP atau online bareng 2–8 teman.">
+    <meta name="theme-color" content="#a9ddf5">
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Warga +62">
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:title" content="Warga +62: Board Game Satir Bertahan Hidup di Indonesia">
+    <meta property="og:description" content="Board game satir gratis di browser. Keliling 36 kota dengan modal Rp10 jt, bayar sewa, pajak, dan tol, lalu bertahan dari kartu Takdir dan Musibah. Main bergantian di satu HP atau online bareng 2–8 teman.">
+    <meta property="og:image" content="https://warga62.aafrzl.my.id/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Warga +62, board game satir: bidak warga di papan 3D keliling kota Indonesia">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Warga +62: Board Game Satir Bertahan Hidup di Indonesia">
+    <meta name="twitter:description" content="Board game satir gratis di browser. Keliling 36 kota dengan modal Rp10 jt, bayar sewa, pajak, dan tol, lalu bertahan dari kartu Takdir dan Musibah. Main bergantian di satu HP atau online bareng 2–8 teman.">
+    <meta name="twitter:image" content="https://warga62.aafrzl.my.id/og-image.jpg">
+    <meta name="twitter:image:alt" content="Warga +62, board game satir: bidak warga di papan 3D keliling kota Indonesia">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Warga +62","url":"https://warga62.aafrzl.my.id/","description":"Board game satir gratis di browser. Keliling 36 kota dengan modal Rp10 jt, bayar sewa, pajak, dan tol, lalu bertahan dari kartu Takdir dan Musibah. Main bergantian di satu HP atau online bareng 2–8 teman.","image":"https://warga62.aafrzl.my.id/og-image.jpg","inLanguage":"id","genre":["Board game","Satir","Party game"],"author":{"@type":"Person","name":"Coding with Afrizal"},"gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","playMode":["MultiPlayer"],"numberOfPlayers":{"@type":"QuantitativeValue","minValue":2,"maxValue":8},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR"}}</script>
+  </head>
+  <body>
+    <noscript><h1>Warga +62</h1><p>Board game satir gratis di browser. Keliling 36 kota dengan modal Rp10 jt, bayar sewa, pajak, dan tol, lalu bertahan dari kartu Takdir dan Musibah. Main bergantian di satu HP atau online bareng 2–8 teman.</p><p>Aktifkan JavaScript untuk bermain.</p></noscript>
+
+    <div id="root"></div>
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"7b6a798018f64a26aa0ea5a63cf1a546","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>

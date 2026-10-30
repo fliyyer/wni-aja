@@ -1,0 +1,587 @@
+/* ==========================================================================
+   WNI SIMULATOR - MODERN CLEAN THEME (NON-BRUTALISM)
+   Clean, sleek, softly elevated, contemporary UI design system
+   ========================================================================== */
+
+:root {
+  --color-ink: #1e293b;
+  --color-paper: #ffffff;
+  --color-sky: #f0f9ff;
+  --color-sand: #f8fafc;
+  --color-sun: #fbbf24;
+  --color-merah: #ef4444;
+  --color-daun: #10b981;
+  --color-muted: #64748b;
+  --color-takdir: #06b6d4;
+  --color-simpanan: #8b5cf6;
+
+  /* Modern typography: Plus Jakarta Sans */
+  --font-display: "Plus Jakarta Sans", "Space Grotesk Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+
+  /* Modern multi-stop smooth shadows */
+  --shadow-brut: 0 10px 25px -4px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.04) !important;
+  --shadow-brut-lg: 0 20px 35px -8px rgba(15, 23, 42, 0.12), 0 10px 15px -3px rgba(15, 23, 42, 0.06) !important;
+  --shadow-brut-sm: 0 4px 12px -2px rgba(15, 23, 42, 0.06), 0 2px 4px -1px rgba(15, 23, 42, 0.04) !important;
+}
+
+/* 1. Global Reset of Brutalism Borders & Shadows */
+.brut {
+  border: 1px solid rgba(15, 23, 42, 0.1) !important;
+  box-shadow: var(--shadow-brut) !important;
+  border-radius: 16px !important;
+}
+
+.shadow-brut {
+  box-shadow: var(--shadow-brut) !important;
+}
+
+.shadow-brut-lg {
+  box-shadow: var(--shadow-brut-lg) !important;
+}
+
+.shadow-brut-sm {
+  box-shadow: var(--shadow-brut-sm) !important;
+}
+
+/* Eliminate harsh thick 3px and 4px black borders */
+.border-3, [class*="border-3"] {
+  border-width: 1px !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+.border-2, [class*="border-2"] {
+  border-width: 1px !important;
+  border-color: rgba(15, 23, 42, 0.1) !important;
+}
+
+.border-ink {
+  border-color: rgba(15, 23, 42, 0.12) !important;
+}
+
+/* 2. Backgrounds: Remove Dotted Matrix Grid */
+body, main, [class*="bg-[radial-gradient"] {
+  background-image: none !important;
+}
+
+body {
+  background: linear-gradient(135deg, #e0f2fe 0%, #f8fafc 50%, #fef3c7 100%) !important;
+  color: #1e293b !important;
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* Clean up main container backgrounds */
+main.bg-sky {
+  background: linear-gradient(145deg, #e0f2fe 0%, #f8fafc 60%, #fffbeb 100%) !important;
+}
+
+/* 3. Smooth Modern Rounded Corners (Clean & Not Overly Rounded) */
+.rounded-2xl {
+  border-radius: 14px !important;
+}
+
+.rounded-xl {
+  border-radius: 12px !important;
+}
+
+.rounded-lg {
+  border-radius: 8px !important;
+}
+
+.rounded-md {
+  border-radius: 6px !important;
+}
+
+/* 4. Remove Artificial Tilts / Skews */
+.-rotate-1, .-rotate-2, .rotate-1, .rotate-2 {
+  transform: none !important;
+}
+
+/* 5. Smooth Button & Interaction Dynamics */
+.brut-press {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  border-radius: 12px !important;
+}
+
+.brut-press:hover:not(:disabled) {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 24px -4px rgba(15, 23, 42, 0.14) !important;
+}
+
+.brut-press:active:not(:disabled) {
+  transform: translateY(0px) scale(0.98) !important;
+  box-shadow: 0 4px 10px -2px rgba(15, 23, 42, 0.08) !important;
+}
+
+button:focus-visible, a:focus-visible, input:focus-visible {
+  outline: 2px solid #3b82f6 !important;
+  outline-offset: 2px !important;
+}
+
+/* 6. Clean Card Surfaces */
+.bg-paper {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+/* 7. Modern In-Game Top Bar Helpers */
+.top-island-dark {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+
+/* 8. Modern Player HUD Strip */
+ol.pointer-events-none.flex li {
+  border-radius: 16px !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+ol.pointer-events-none.flex li p.tabular-nums {
+  font-weight: 800 !important;
+  color: #0f172a !important;
+}
+
+/* 9. Modern Bottom Action Console (Lempar Dadu) */
+section[aria-label*="Lempar dadu"] {
+  background: rgba(255, 255, 255, 0.96) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.22), 0 2px 6px rgba(0, 0, 0, 0.06) !important;
+  padding: 16px 20px !important;
+  width: min(580px, calc(100vw - 2rem)) !important;
+  max-width: 580px !important;
+}
+
+/* Modern Power Meter */
+section[aria-label*="Lempar dadu"] div.flex.h-7,
+section[aria-label*="Lempar dadu"] div.sm\:h-8,
+section[aria-label*="Lempar dadu"] div.h-8,
+section[aria-label*="Lempar dadu"] div.sm\:h-9 {
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+  border-radius: 12px !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08) !important;
+  overflow: hidden !important;
+}
+
+section[aria-label*="Lempar dadu"] div.absolute.-top-1\.5 {
+  width: 8px !important;
+  border-radius: 9999px !important;
+  background-color: #0f172a !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Modern Primary Action Button */
+section[aria-label*="Lempar dadu"] button[aria-label*="Kocok dadu"] {
+  width: 100% !important;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%) !important;
+  color: #0f172a !important;
+  border: none !important;
+  border-radius: 14px !important;
+  font-weight: 900 !important;
+  font-size: 1.05rem !important;
+  letter-spacing: 0.02em !important;
+  box-shadow: 0 10px 25px -4px rgba(245, 158, 11, 0.5), 0 4px 6px -2px rgba(245, 158, 11, 0.25) !important;
+  padding-top: 14px !important;
+  padding-bottom: 14px !important;
+}
+
+section[aria-label*="Lempar dadu"] button[aria-label*="Kocok dadu"]:hover:not(:disabled) {
+  background: linear-gradient(135deg, #fde047 0%, #fbbf24 50%, #f59e0b 100%) !important;
+  box-shadow: 0 14px 28px -4px rgba(245, 158, 11, 0.6) !important;
+  transform: translateY(-2px) !important;
+}
+
+section[aria-label*="Lempar dadu"] button[aria-label*="Kocok dadu"]:active:not(:disabled) {
+  transform: translateY(0px) scale(0.99) !important;
+  box-shadow: 0 4px 10px -2px rgba(245, 158, 11, 0.3) !important;
+}
+
+/* 10. Modern Modals & Dialogs */
+dialog {
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+  border-radius: 18px !important;
+  background: #ffffff !important;
+  box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.25), 0 4px 6px -2px rgba(15, 23, 42, 0.05) !important;
+  max-height: 94vh !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+dialog.game-menu-dialog,
+dialog[aria-labelledby="game-menu-title"] {
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+}
+
+dialog::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Property Investment Modal & 2XL Sizing */
+dialog.property-modal,
+dialog.modal-2xl {
+  width: min(780px, calc(100vw - 2rem)) !important;
+  max-width: 780px !important;
+  max-height: 92vh !important;
+  border-radius: 18px !important;
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+  background: #ffffff !important;
+  box-shadow: 0 25px 60px -12px rgba(15, 23, 42, 0.35) !important;
+  overflow-y: auto !important;
+  padding: 0 !important;
+}
+
+dialog.modal-wide {
+  width: min(600px, calc(100vw - 2rem)) !important;
+  max-width: 600px !important;
+}
+
+dialog.modal-default {
+  width: min(460px, calc(100vw - 2rem)) !important;
+  max-width: 460px !important;
+}
+
+@media (min-width: 640px) {
+  dialog.property-modal {
+    overflow-y: auto !important;
+  }
+  .property-modal-grid {
+    display: grid !important;
+    grid-template-columns: 5fr 7fr !important;
+    gap: 14px !important;
+    align-items: start !important;
+  }
+}
+
+@media (max-width: 639px) {
+  dialog.property-modal {
+    border-radius: 16px 16px 0 0 !important;
+    padding: 0 !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+  }
+  .property-modal-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+}
+
+.property-tiers-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 6px !important;
+}
+
+.property-province-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 6px !important;
+}
+
+.property-actions-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+.property-actions-grid > button {
+  width: 100% !important;
+  min-height: 52px !important;
+}
+
+dialog::backdrop {
+  background: rgba(15, 23, 42, 0.45) !important;
+  backdrop-filter: blur(6px) !important;
+}
+
+dialog h2, dialog h3 {
+  font-weight: 800 !important;
+  letter-spacing: -0.02em !important;
+  color: #0f172a !important;
+}
+
+dialog h2.banner-city-title,
+.banner-city-title {
+  color: #ffffff !important;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* 11. Modern Room Code Box (Lobby) */
+span.shadow-brut.bg-ink {
+  background: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.15) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 12px 28px -4px rgba(15, 23, 42, 0.1) !important;
+  padding: 8px !important;
+}
+
+span.shadow-brut.bg-ink span.border-paper {
+  border: none !important;
+  background: #f8fafc !important;
+  border-radius: 12px !important;
+}
+
+span.shadow-brut.bg-ink input {
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+
+span.shadow-brut.bg-ink span.text-paper\/70 {
+  color: #64748b !important;
+}
+
+/* 12. Turn Notification Banner */
+p.animate-slam,
+div.animate-turn-banner p {
+  background: rgba(15, 23, 42, 0.9) !important;
+  backdrop-filter: blur(12px) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.3) !important;
+  padding: 12px 24px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* 13. Modern Landing Page Hero & Menu */
+h1.font-display {
+  font-family: "Space Grotesk Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: clamp(2.4rem, 6vw, 3.5rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.08 !important;
+  color: #0f172a !important;
+  text-align: center;
+}
+
+span.bg-merah {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 12px -2px rgba(239, 68, 68, 0.3) !important;
+  border-radius: 9999px !important;
+  padding: 4px 12px !important;
+  font-weight: 700 !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.02em !important;
+}
+
+nav.grid a.brut-press {
+  font-family: "Space Grotesk Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  letter-spacing: -0.01em !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 14px -2px rgba(15, 23, 42, 0.08) !important;
+  padding: 14px 20px !important;
+}
+
+nav.grid a.bg-sun {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 8px 20px -4px rgba(245, 158, 11, 0.4) !important;
+}
+
+nav.grid a.bg-paper {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  border: 1px solid rgba(15, 23, 42, 0.1) !important;
+}
+
+main div.flex.-space-x-3 span {
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12) !important;
+  border-radius: 9999px !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+main div.flex.-space-x-3 span:hover {
+  transform: translateY(-4px) scale(1.1) !important;
+  z-index: 10 !important;
+}
+
+/* 14. Dialog Interior Polish */
+dialog .bg-white {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+dialog .bg-slate-50, dialog .bg-slate-50\/80, dialog .bg-slate-50\/70 {
+  background-color: #f8fafc !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+dialog .text-ink {
+  color: #0f172a !important;
+}
+
+dialog .text-muted {
+  color: #64748b !important;
+}
+
+
+/* 15. In-Game HUD Animations & Utilities */
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.45); }
+  50% { box-shadow: 0 0 0 6px rgba(59, 130, 246, 0); }
+}
+.active-player-glow {
+  animation: pulse-ring 2s infinite !important;
+}
+@keyframes float-badge {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-3px) scale(1.03); }
+}
+.animate-float-badge {
+  animation: float-badge 2s infinite ease-in-out !important;
+}
+.tier-card {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.tier-card:hover {
+  transform: translateY(-2px) !important;
+}
+
+/* 16. Modern Fieldset / Segmented Controls in Settings */
+fieldset {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+fieldset legend {
+  font-size: 0.75rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+  color: #334155 !important;
+  margin-bottom: 6px !important;
+}
+
+fieldset div.flex {
+  background-color: #f1f5f9 !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  border-radius: 12px !important;
+  padding: 3px !important;
+  gap: 3px !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+fieldset div.flex label {
+  border: none !important;
+  border-radius: 9px !important;
+  padding: 6px 10px !important;
+  font-size: 0.75rem !important;
+  font-weight: 800 !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  color: #64748b !important;
+  cursor: pointer !important;
+}
+
+fieldset div.flex label:hover {
+  color: #0f172a !important;
+  background-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+fieldset div.flex label:has(input:checked) {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px -1px rgba(15, 23, 42, 0.25) !important;
+}
+
+/* 17. Custom Game Cursors & Global Pointer Interactions */
+html, body, #root, canvas, .low-poly-terrain {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28' fill='none'%3E%3Cpath d='M4 2L20 13.5L13 15L9.5 22L4 2Z' fill='rgba(0,0,0,0.3)' transform='translate(1.5, 2)'/%3E%3Cpath d='M4 2L20 13.5L13 15L9.5 22L4 2Z' fill='%230f172a' stroke='%23ffffff' stroke-width='2' stroke-linejoin='round'/%3E%3Cpolygon points='6,5 16,13 12,14 9.5,19' fill='%23f59e0b'/%3E%3C/svg%3E") 4 2, auto !important;
+}
+
+button,
+a,
+[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"],
+select,
+summary,
+label,
+.cursor-pointer,
+.brut-press,
+dialog button,
+ol.pointer-events-none li,
+section[aria-label*="Lempar dadu"] button,
+.tier-card {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30' fill='none'%3E%3Cpath d='M4 2L21 14.5L13.5 16.5L10 24L4 2Z' fill='rgba(0,0,0,0.35)' transform='translate(1.5, 2)'/%3E%3Cpath d='M4 2L21 14.5L13.5 16.5L10 24L4 2Z' fill='%23f59e0b' stroke='%23ffffff' stroke-width='2' stroke-linejoin='round'/%3E%3Ccircle cx='10' cy='11' r='2.5' fill='%23ffffff'/%3E%3Cpath d='M16 18L24 26' stroke='%23ffffff' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M16 18L24 26' stroke='%23d97706' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") 4 2, pointer !important;
+}
+
+button:disabled,
+input:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed !important;
+}
+
+/* 18. Live Game Action Notifications */
+@keyframes notif-slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.95);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(2px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-notif-slide-down {
+  animation: notif-slide-down 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+.game-notif-card {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.game-notif-card:hover {
+  transform: translateY(-2px) scale(1.01) !important;
+  box-shadow: 0 20px 30px -8px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* 16. Smooth Floating Cash Delta Badge */
+@keyframes modern-money-float {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.85);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(0px) scale(1.05);
+  }
+  30% {
+    transform: translateY(-2px) scale(1);
+  }
+  75% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+}
+
+.animate-money-float {
+  animation: modern-money-float 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  will-change: transform, opacity !important;
+  pointer-events: none !important;
+  z-index: 50 !important;
+}
+

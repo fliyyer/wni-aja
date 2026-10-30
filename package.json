@@ -1,0 +1,13 @@
+{
+  "name": "wni-simulator",
+  "version": "1.0.0",
+  "description": "WNI Simulator (LAH LU WNI? Web Board Game) - Full Stack Clone",
+  "scripts": {
+    "start": "node backend/src/index.js",
+    "dev": "node --watch backend/src/index.js",
+    "install:all": "cd backend && npm install"
+  },
+  "keywords": ["game", "board-game", "monopoly", "colyseus", "react", "threejs"],
+  "author": "",
+  "license": "ISC"
+}

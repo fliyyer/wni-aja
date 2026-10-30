@@ -1,0 +1,1 @@
+var e=e=>`/cards/${e}.webp`;export{e as t};
