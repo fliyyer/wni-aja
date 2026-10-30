@@ -93,17 +93,18 @@
     "/audio/vo/utang-telat.mp3"
   ];
 
-  const CACHE_NAME = "wni-audio-cache-v1";
-  const isLoadedBefore = sessionStorage.getItem("wni_assets_cached") === "1";
-
-  const SATIR_TIPS = [
-    "Menyetempel formulir rangkap 4 bermeterai...",
-    "Petugas kelurahan sedang istirahat makan siang...",
-    "Server Dukcapil sedang antre koneksi internet...",
-    "Fotokopi KTP warna 2 lembar belum diserahkan...",
-    "Menunggu tanda tangan Pak RT yang lagi ronda...",
-    "Menyortir berkas bansos dan tagihan pinjol..."
+  // 3D Model GLB files (Island, Board, Buildings, Pawns, Dice)
+  const MODEL_FILES = [
+    "/models/board.glb",
+    "/models/buildings.glb",
+    "/models/pawns.glb",
+    "/models/dice.glb"
   ];
+
+  const ALL_PRELOAD_FILES = [...MODEL_FILES, ...AUDIO_FILES];
+
+  const CACHE_NAME = "wni-assets-cache-v2";
+  const isLoadedBefore = sessionStorage.getItem("wni_assets_cached_v2") === "1";
 
   function createPreloaderOverlay() {
     const style = document.createElement("style");
@@ -223,8 +224,10 @@
     const overlay = createPreloaderOverlay();
     const bar = document.getElementById("wni-bar");
     const pct = document.getElementById("wni-pct");
+    const status = document.getElementById("wni-status");
+
     let loaded = 0;
-    const total = AUDIO_FILES.length;
+    const total = ALL_PRELOAD_FILES.length;
     const CONCURRENCY = 6;
     let index = 0;
 
@@ -237,7 +240,7 @@
 
     async function downloadNext() {
       while (index < total) {
-        const file = AUDIO_FILES[index++];
+        const file = ALL_PRELOAD_FILES[index++];
         try {
           if (cache) {
             const match = await cache.match(file);
@@ -254,7 +257,10 @@
         const percent = Math.round((loaded / total) * 100);
         if (bar) bar.style.width = percent + "%";
         if (pct) pct.textContent = percent + "%";
-        if (status) status.textContent = `Memuat suara & aset (${loaded}/${total})`;
+        if (status) {
+          const fileName = file.split("/").pop();
+          status.textContent = `Memuat ${fileName} (${loaded}/${total})`;
+        }
       }
     }
 
@@ -265,11 +271,11 @@
 
     await Promise.all(workers);
 
-    sessionStorage.setItem("wni_assets_cached", "1");
+    sessionStorage.setItem("wni_assets_cached_v2", "1");
 
     if (bar) bar.style.width = "100%";
     if (pct) pct.textContent = "100%";
-    if (status) status.textContent = "Siap dimainkan!";
+    if (status) status.textContent = "Pulau & berkas siap!";
 
     // Otomatis langsung masuk ke game begitu 100% tanpa klik tombol
     setTimeout(() => {
