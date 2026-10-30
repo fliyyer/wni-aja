@@ -113,10 +113,11 @@
         inset: 0;
         z-index: 999999;
         background-color: #161412;
-        background-image: linear-gradient(rgba(15, 12, 10, 0.78), rgba(15, 12, 10, 0.88)), url('/assets/loading-bg.jpg');
+        background-image: linear-gradient(rgba(10, 10, 12, 0.45), rgba(10, 10, 12, 0.55)), url('/assets/loading-bg.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        backdrop-filter: blur(2px);
         color: #fff8e8;
         display: flex;
         flex-direction: column;
