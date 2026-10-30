@@ -138,7 +138,9 @@ export class GameRoom extends Room {
 
         this.gameState = result.state;
         const hasDice = result.events.some(e => e.type === "DICE");
-        const throwData = (message.level || hasDice) ? { level: message.level || 1 } : undefined;
+        const validLevels = ["cupu", "biasa", "perfect"];
+        const diceLevel = (message && validLevels.includes(message.level)) ? message.level : "biasa";
+        const throwData = (message.level || hasDice) ? { level: diceLevel } : undefined;
 
         this.broadcast("update", {
           seq: this.seq++,
