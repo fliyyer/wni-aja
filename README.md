@@ -1,6 +1,6 @@
 # WNI Simulator (LAH LU WNI? Web Board Game)
 
-Clone full-stack dari game web **LAH LU WNI?: Board Game Satir Bertahan Hidup di Indonesia**. Dilengkapi dengan frontend (Three.js 3D board, audio, voiceover, styling Neo-Brutalism) dan backend server multiplayer (Colyseus + WebSocket).
+Clone full-stack dari game web **LAH LU WNI?: Board Game Satir Bertahan Hidup di Indonesia**. Dilengkapi dengan frontend (Three.js 3D board, audio, voiceover, styling Neo-Brutalism) dan backend server multiplayer (Colyseus + WebSocket)
 
 ---
 
