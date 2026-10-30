@@ -10,4 +10,9 @@ services:
     environment:
       - PORT=2567
       - NODE_ENV=production
-      - COLYSEUS_SEAT_RESERVATION_TIME=60
+      - NODE_OPTIONS=--max-old-space-size=1200
+      - COLYSEUS_SEAT_RESERVATION_TIME=120
+    deploy:
+      resources:
+        limits:
+          memory: 1500M

@@ -118,16 +118,27 @@ app.get("*", (req, res, next) => {
 
 const server = http.createServer(app);
 
+// WebSocket transport optimized for mobile networks & low-spec VPS
+// pingInterval: 10s, pingMaxRetries: 6 gives a ~60s tolerance for brief network stalls
 const gameServer = new Server({
   transport: new WebSocketTransport({
     server: server,
-    pingInterval: 5000,
-    pingMaxRetries: 3
+    pingInterval: 10000,
+    pingMaxRetries: 6
   })
 });
 
 // Register the room handler
 gameServer.define("game", GameRoom);
+
+// Process crash safety handlers
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("[Process] Unhandled Rejection at:", promise, "reason:", reason);
+});
+
+process.on("uncaughtException", (err) => {
+  console.error("[Process] Uncaught Exception:", err);
+});
 
 server.listen(PORT, () => {
   console.log(`===============================================`);

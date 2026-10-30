@@ -17,7 +17,7 @@ export class GameRoom extends Room {
   maxClients = 8;
 
   onCreate(options) {
-    this.setSeatReservationTime(60);
+    this.setSeatReservationTime(120); // 120 seconds seat reservation window
     const roomCode = options.roomCode || generateRoomCode();
     this.roomId = roomCode;
 
@@ -241,7 +241,7 @@ export class GameRoom extends Room {
       if (player) player.connected = false;
       try {
         if (!consented) {
-          await this.allowReconnection(client, 60); // 60 seconds reconnection window
+          await this.allowReconnection(client, 120); // 120 seconds reconnection window
           if (player) player.connected = true;
           return;
         }
