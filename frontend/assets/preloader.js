@@ -1,5 +1,5 @@
 // Asset Preloader & Audio Cache for WNI Simulator
-// Caches all 88 SFX & music to browser cache / memory to eliminate network delay during gameplay
+// Auto-dismisses when 100% loaded without needing button press
 
 (function() {
   const AUDIO_FILES = [
@@ -93,11 +93,17 @@
     "/audio/vo/utang-telat.mp3"
   ];
 
-  // Intercept fetch/audio to serve from Cache if available
   const CACHE_NAME = "wni-audio-cache-v1";
-
-  // Check if user already loaded assets in current session
   const isLoadedBefore = sessionStorage.getItem("wni_assets_cached") === "1";
+
+  const SATIR_TIPS = [
+    "Menyetempel formulir rangkap 4 bermeterai...",
+    "Petugas kelurahan sedang istirahat makan siang...",
+    "Server Dukcapil sedang antre koneksi internet...",
+    "Fotokopi KTP warna 2 lembar belum diserahkan...",
+    "Menunggu tanda tangan Pak RT yang lagi ronda...",
+    "Menyortir berkas bansos dan tagihan pinjol..."
+  ];
 
   function createPreloaderOverlay() {
     const style = document.createElement("style");
@@ -106,16 +112,20 @@
         position: fixed;
         inset: 0;
         z-index: 999999;
-        background: #161412;
+        background-color: #161412;
+        background-image: linear-gradient(rgba(15, 12, 10, 0.78), rgba(15, 12, 10, 0.88)), url('/assets/loading-bg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
         color: #fff8e8;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 1.5rem;
+        padding: 1.25rem;
         font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
         user-select: none;
-        transition: opacity 0.4s ease, visibility 0.4s ease;
+        transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s ease;
       }
       #wni-preloader.fade-out {
         opacity: 0;
@@ -128,38 +138,40 @@
         background: #fff8e8;
         color: #161412;
         border: 4px solid #161412;
-        border-radius: 1rem;
+        border-radius: 1.25rem;
         box-shadow: 8px 8px 0px #161412;
         padding: 1.5rem;
         text-align: center;
+        backdrop-filter: blur(4px);
       }
       .preloader-badge {
         display: inline-block;
         background: #ffd23f;
         border: 2px solid #161412;
-        font-size: 0.75rem;
+        font-size: 0.72rem;
         font-weight: 800;
         text-transform: uppercase;
-        padding: 0.25rem 0.6rem;
+        padding: 0.25rem 0.65rem;
         border-radius: 9999px;
         margin-bottom: 0.75rem;
         box-shadow: 2px 2px 0px #161412;
       }
       .preloader-title {
-        font-size: 1.4rem;
+        font-size: 1.35rem;
         font-weight: 900;
         letter-spacing: -0.02em;
         margin-bottom: 0.25rem;
         line-height: 1.2;
       }
       .preloader-subtitle {
-        font-size: 0.85rem;
+        font-size: 0.82rem;
         color: #555;
-        margin-bottom: 1.25rem;
+        margin-bottom: 1.2rem;
+        font-weight: 500;
       }
       .preloader-bar-bg {
         width: 100%;
-        height: 1.25rem;
+        height: 1.2rem;
         background: #ecd7a9;
         border: 3px solid #161412;
         border-radius: 9999px;
@@ -172,63 +184,47 @@
         width: 0%;
         background: #2a9d8f;
         border-right: 3px solid #161412;
-        transition: width 0.15s ease-out;
+        transition: width 0.1s ease-out;
       }
       .preloader-stats {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         font-size: 0.75rem;
-        font-weight: 700;
-        color: #444;
+        font-weight: 800;
+        color: #333;
       }
-      .preloader-tip {
+      .preloader-satir {
         margin-top: 1rem;
+        padding-top: 0.75rem;
+        border-top: 2px dashed #d5caa9;
         font-size: 0.75rem;
         color: #666;
-        font-style: italic;
-      }
-      .preloader-btn {
-        margin-top: 1.25rem;
-        width: 100%;
-        padding: 0.75rem 1.25rem;
-        font-size: 0.95rem;
-        font-weight: 900;
-        text-transform: uppercase;
-        background: #ffd23f;
-        color: #161412;
-        border: 3px solid #161412;
-        border-radius: 0.75rem;
-        box-shadow: 4px 4px 0px #161412;
-        cursor: pointer;
-        transition: transform 0.1s ease, box-shadow 0.1s ease;
-        display: none;
-      }
-      .preloader-btn:active {
-        transform: translate(2px, 2px);
-        box-shadow: 2px 2px 0px #161412;
+        font-weight: 600;
       }
     `;
     document.head.appendChild(style);
+
+    const initialTip = SATIR_TIPS[Math.floor(Math.random() * SATIR_TIPS.length)];
 
     const overlay = document.createElement("div");
     overlay.id = "wni-preloader";
     overlay.innerHTML = `
       <div class="preloader-card">
-        <span class="preloader-badge">🇮🇩 Kantor Kelurahan Digital</span>
-        <h2 class="preloader-title">Menyiapkan Berkas & KTP</h2>
-        <p class="preloader-subtitle">Mengunduh 88 suara, musik, dan aset 3D agar game berjalan mulus tanpa delay.</p>
+        <span class="preloader-badge">🇮🇩 Loket Pelayanan Terpadu</span>
+        <h2 class="preloader-title">Memverifikasi KTP & Berkas</h2>
+        <p class="preloader-subtitle">Sinkronisasi 88 audio & aset ke perangkat agar game bebas delay.</p>
         
         <div class="preloader-bar-bg">
           <div class="preloader-bar-fill" id="wni-bar"></div>
         </div>
         
         <div class="preloader-stats">
-          <span id="wni-status">Memulai sinkronisasi berkas...</span>
+          <span id="wni-status">Menghubungkan ke Dukcapil...</span>
           <span id="wni-pct">0%</span>
         </div>
 
-        <button id="wni-start-btn" class="preloader-btn">Masuk Main Sekarang</button>
-        <p class="preloader-tip">💡 Tip: Audio di-cache di perangkatmu, tidak akan download ulang tiap giliran.</p>
+        <div class="preloader-satir" id="wni-tip">${initialTip}</div>
       </div>
     `;
     document.body.appendChild(overlay);
@@ -241,12 +237,14 @@
     const bar = document.getElementById("wni-bar");
     const pct = document.getElementById("wni-pct");
     const status = document.getElementById("wni-status");
-    const startBtn = document.getElementById("wni-start-btn");
+    const tip = document.getElementById("wni-tip");
+
+    let tipTimer = setInterval(() => {
+      if (tip) tip.textContent = SATIR_TIPS[Math.floor(Math.random() * SATIR_TIPS.length)];
+    }, 2500);
 
     let loaded = 0;
     const total = AUDIO_FILES.length;
-
-    // Concurrency limit to avoid choking browser or server
     const CONCURRENCY = 6;
     let index = 0;
 
@@ -268,21 +266,15 @@
               if (res.ok) await cache.put(file, res.clone());
             }
           } else {
-            // Fallback: standard fetch
             await fetch(file, { cache: "force-cache" });
           }
-        } catch (_) {
-          // Continue gracefully even if 1 audio drops
-        }
+        } catch (_) {}
 
         loaded++;
         const percent = Math.round((loaded / total) * 100);
         if (bar) bar.style.width = percent + "%";
         if (pct) pct.textContent = percent + "%";
-        if (status) {
-          const fileName = file.split("/").pop();
-          status.textContent = `${loaded}/${total} (${fileName})`;
-        }
+        if (status) status.textContent = `${loaded}/${total} Berkas`;
       }
     }
 
@@ -292,33 +284,22 @@
     }
 
     await Promise.all(workers);
+    clearInterval(tipTimer);
 
-    // Save session flag so reload doesn't block needlessly
     sessionStorage.setItem("wni_assets_cached", "1");
 
-    if (status) status.textContent = "Semua aset siap!";
     if (bar) bar.style.width = "100%";
     if (pct) pct.textContent = "100%";
+    if (status) status.textContent = "Berkas Lengkap!";
+    if (tip) tip.textContent = "✅ Dokumen sah! Masuk ke permainan...";
 
-    if (isLoadedBefore) {
-      // Auto close quickly if already cached
-      setTimeout(() => {
-        overlay.classList.add("fade-out");
-        setTimeout(() => overlay.remove(), 400);
-      }, 400);
-    } else {
-      // Show start button on first fresh load to unlock browser audio policy
-      if (startBtn) {
-        startBtn.style.display = "block";
-        startBtn.addEventListener("click", () => {
-          overlay.classList.add("fade-out");
-          setTimeout(() => overlay.remove(), 400);
-        });
-      }
-    }
+    // Otomatis langsung masuk ke game begitu 100% tanpa klik tombol
+    setTimeout(() => {
+      overlay.classList.add("fade-out");
+      setTimeout(() => overlay.remove(), 500);
+    }, 450);
   }
 
-  // Run on DOM ready
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", startPreloading);
   } else {
