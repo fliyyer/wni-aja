@@ -215,10 +215,26 @@ export class GameRoom extends Room {
     const player = this.state.players.get(client.sessionId);
 
     if (this.state.status === "lobby") {
-      this.state.players.delete(client.sessionId);
-      if (this.state.hostId === client.sessionId) {
-        const remaining = Array.from(this.state.players.keys());
-        this.state.hostId = remaining.length > 0 ? remaining[0] : "";
+      if (consented) {
+        this.state.players.delete(client.sessionId);
+        if (this.state.hostId === client.sessionId) {
+          const remaining = Array.from(this.state.players.keys());
+          this.state.hostId = remaining.length > 0 ? remaining[0] : "";
+        }
+      } else {
+        // Pemain terputus tidak sengaja di lobi: beri jeda rekoneksi 30 detik
+        if (player) player.connected = false;
+        try {
+          await this.allowReconnection(client, 30);
+          if (player) player.connected = true;
+          return;
+        } catch {
+          this.state.players.delete(client.sessionId);
+          if (this.state.hostId === client.sessionId) {
+            const remaining = Array.from(this.state.players.keys());
+            this.state.hostId = remaining.length > 0 ? remaining[0] : "";
+          }
+        }
       }
     } else {
       // In game: mark as disconnected and allow reconnection window
