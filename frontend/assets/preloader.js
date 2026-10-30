@@ -93,18 +93,20 @@
     "/audio/vo/utang-telat.mp3"
   ];
 
-  // 3D Model GLB files (Island, Board, Buildings, Pawns, Dice)
+  // 3D Model GLB files, Textures, and Fonts for Island & Board
   const MODEL_FILES = [
     "/models/board.glb",
     "/models/buildings.glb",
     "/models/pawns.glb",
-    "/models/dice.glb"
+    "/models/dice.glb",
+    "/textures/kota.jpg",
+    "/fonts/fredoka-600.woff"
   ];
 
   const ALL_PRELOAD_FILES = [...MODEL_FILES, ...AUDIO_FILES];
 
-  const CACHE_NAME = "wni-assets-cache-v2";
-  const isLoadedBefore = sessionStorage.getItem("wni_assets_cached_v2") === "1";
+  const CACHE_NAME = "wni-assets-cache-v3";
+  const isLoadedBefore = sessionStorage.getItem("wni_assets_cached_v3") === "1";
 
   function createPreloaderOverlay() {
     const style = document.createElement("style");
