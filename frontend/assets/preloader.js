@@ -194,6 +194,20 @@
         font-weight: 800;
         color: #475569;
       }
+      .preloader-skip-btn {
+        margin-top: 1rem;
+        background: transparent;
+        border: none;
+        color: #64748b;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-decoration: underline;
+        cursor: pointer;
+        padding: 0.25rem 0.5rem;
+      }
+      .preloader-skip-btn:hover {
+        color: #161412;
+      }
     `;
     document.head.appendChild(style);
 
@@ -213,6 +227,8 @@
           <span id="wni-status">Menyiapkan aset...</span>
           <span id="wni-pct">0%</span>
         </div>
+
+        <button id="wni-skip-btn" class="preloader-skip-btn" type="button">Lewati & Langsung Main →</button>
       </div>
     `;
     document.body.appendChild(overlay);
@@ -221,10 +237,35 @@
   }
 
   async function startPreloading() {
+    if (isLoadedBefore) {
+      return;
+    }
+
     const overlay = createPreloaderOverlay();
     const bar = document.getElementById("wni-bar");
     const pct = document.getElementById("wni-pct");
     const status = document.getElementById("wni-status");
+    const skipBtn = document.getElementById("wni-skip-btn");
+
+    let isDismissed = false;
+    function dismiss() {
+      if (isDismissed) return;
+      isDismissed = true;
+      sessionStorage.setItem("wni_assets_cached_v2", "1");
+      if (overlay) {
+        overlay.classList.add("fade-out");
+        setTimeout(() => overlay.remove(), 400);
+      }
+    }
+
+    if (skipBtn) {
+      skipBtn.addEventListener("click", dismiss);
+    }
+
+    // Safety timeout: maksimal 5 detik agar pengguna tidak pernah mentok/stuck
+    const safetyTimer = setTimeout(() => {
+      dismiss();
+    }, 5000);
 
     let loaded = 0;
     const total = ALL_PRELOAD_FILES.length;
@@ -239,8 +280,12 @@
     }
 
     async function downloadNext() {
-      while (index < total) {
-        const file = ALL_PRELOAD_FILES[index++];
+      while (true) {
+        const i = index++;
+        if (i >= total) break;
+        const file = ALL_PRELOAD_FILES[i];
+        if (!file) break;
+
         try {
           if (cache) {
             const match = await cache.match(file);
@@ -254,10 +299,10 @@
         } catch (_) {}
 
         loaded++;
-        const percent = Math.round((loaded / total) * 100);
+        const percent = Math.min(100, Math.round((loaded / total) * 100));
         if (bar) bar.style.width = percent + "%";
         if (pct) pct.textContent = percent + "%";
-        if (status) {
+        if (status && typeof file === "string") {
           const fileName = file.split("/").pop();
           status.textContent = `Memuat ${fileName} (${loaded}/${total})`;
         }
@@ -269,19 +314,19 @@
       workers.push(downloadNext());
     }
 
-    await Promise.all(workers);
+    try {
+      await Promise.all(workers);
+    } catch (_) {}
 
-    sessionStorage.setItem("wni_assets_cached_v2", "1");
+    clearTimeout(safetyTimer);
 
     if (bar) bar.style.width = "100%";
     if (pct) pct.textContent = "100%";
     if (status) status.textContent = "Pulau & berkas siap!";
 
-    // Otomatis langsung masuk ke game begitu 100% tanpa klik tombol
     setTimeout(() => {
-      overlay.classList.add("fade-out");
-      setTimeout(() => overlay.remove(), 500);
-    }, 450);
+      dismiss();
+    }, 350);
   }
 
   if (document.readyState === "loading") {
