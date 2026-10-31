@@ -30,6 +30,26 @@ export class GameRoom extends Room {
     this.gameId = 1;
     this.chatHistory = [];
     this.gameState = null;
+    this.turnTimer = null;
+
+    // Periodic Heartbeat (every 2.5s) to guarantee clients stay in sync and detect desync
+    this.clock.setInterval(() => {
+      if (this.gameState) {
+        this.broadcast("heartbeat", {
+          seq: this.seq,
+          turn: this.gameState.currentPlayer,
+          round: this.gameState.round,
+          phase: this.gameState.phase,
+          deadline: this.state.deadline,
+          serverTime: Date.now()
+        });
+      }
+    }, 2500);
+
+    // Latency Ping / Pong
+    this.onMessage("ping", (client, clientTime) => {
+      client.send("pong", clientTime);
+    });
 
     // Handshake
     this.onMessage("hello", (client) => {
@@ -118,6 +138,7 @@ export class GameRoom extends Room {
           state: this.gameState,
           events: []
         });
+        this.resetTurnTimer();
       } catch (err) {
         console.error("Gagal memulai game:", err);
         client.send("error", { message: err.message || "Gagal memulai game" });
@@ -149,6 +170,7 @@ export class GameRoom extends Room {
           events: result.events,
           throw: throwData
         });
+        this.resetTurnTimer();
       } catch (err) {
         console.error("Error executing action:", err);
         client.send("error", { message: err.message });
@@ -241,6 +263,9 @@ export class GameRoom extends Room {
     } else {
       // In game: mark as disconnected and allow reconnection window
       if (player) player.connected = false;
+      if (this.gameState && this.gameState.currentPlayer === client.sessionId) {
+        this.resetTurnTimer();
+      }
       try {
         if (!consented) {
           await this.allowReconnection(client, 120); // 120 seconds reconnection window
@@ -253,7 +278,65 @@ export class GameRoom extends Room {
     }
   }
 
+  resetTurnTimer() {
+    if (this.turnTimer) {
+      this.turnTimer.clear();
+      this.turnTimer = null;
+    }
+    if (!this.gameState || this.gameState.phase === "game_over") {
+      this.state.deadline = 0;
+      return;
+    }
+
+    const currentPlayer = this.gameState.currentPlayer;
+    const playerRecord = this.state.players.get(currentPlayer);
+    const isDisconnected = playerRecord && playerRecord.connected === false;
+
+    // 8 detik jika pemain terputus / offline; 35 detik jika online
+    const TURN_DURATION_MS = isDisconnected ? 8000 : 35000;
+    this.state.deadline = Date.now() + TURN_DURATION_MS;
+
+    this.turnTimer = this.clock.setTimeout(() => {
+      this.handleTurnTimeout();
+    }, TURN_DURATION_MS);
+  }
+
+  handleTurnTimeout() {
+    if (!this.gameState || this.gameState.phase === "game_over") return;
+    const timedOutPlayer = this.gameState.currentPlayer;
+    console.log(`[GameRoom] Turn timeout for player ${timedOutPlayer} in phase ${this.gameState.phase}`);
+
+    try {
+      const result = stepAction(this.gameState, timedOutPlayer, { type: "TIMEOUT" });
+      if (!result.error) {
+        this.gameState = result.state;
+        const hasDice = result.events.some(e => e.type === "DICE");
+        const throwData = hasDice ? { level: "biasa" } : undefined;
+
+        this.broadcast("update", {
+          seq: this.seq++,
+          game: this.gameId,
+          state: this.gameState,
+          events: result.events,
+          throw: throwData
+        });
+        this.resetTurnTimer();
+      } else {
+        console.warn(`[GameRoom] Timeout step error for ${timedOutPlayer}:`, result.error);
+        this.turnTimer = this.clock.setTimeout(() => this.resetTurnTimer(), 3000);
+      }
+    } catch (err) {
+      console.error("[GameRoom] Exception during turn timeout handling:", err);
+      this.turnTimer = this.clock.setTimeout(() => this.resetTurnTimer(), 3000);
+    }
+  }
+
   onDispose() {
+    if (this.turnTimer) {
+      this.turnTimer.clear();
+      this.turnTimer = null;
+    }
     console.log(`[GameRoom] Room disposed: ${this.roomId}`);
   }
 }
+

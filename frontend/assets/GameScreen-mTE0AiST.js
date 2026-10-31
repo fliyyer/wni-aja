@@ -985,7 +985,7 @@ var Qs=()=>Date.now(),$s=[{tray:`lines`,label:`Kalimat cepat`},{tray:`stickers`,
       y=g!==null&&_===g,
       b=e.phase===`pre_roll`||y||(e.phase===`awaiting_dice`&&(!e.pending||(e.pending.kind!==`dice`&&e.pending.kind!==`card`))),
       x=e.moneyRequests.length>0||e.trade!==null,
-      activePlayerName=e.players[e.currentPlayer]?.name||`Pemain`;(0,U.useEffect)(()=>{if(m&&!u&&(!l||!b)){let tm=setTimeout(()=>{try{console.warn('[AutoSync] Giliran aktif tertahan, sinkronkan ulang...');I.getState().resync?.()||(L.getState().resync?.()||(L.setState({moves:[],view:null,shots:[],reveals:[],playingShot:null,arrived:{}}),P.setState({current:null,focus:null})),I.getState().send?.('hello'))}catch(_){}},2200);return()=>clearTimeout(tm)}},[m,u,l,b,e.round,e.currentPlayer]);
+      activePlayerName=e.players[e.currentPlayer]?.name||`Pemain`,netStatus=I(e=>e.status),ping=I(e=>e.ping),lagging=I(e=>e.lagging),autoHealing=I(e=>e.autoHealing);(0,U.useEffect)(()=>{if(m&&!u&&(!l||!b)){let tm=setTimeout(()=>{try{console.warn('[AutoSync] Giliran aktif tertahan, sinkronkan ulang...');I.getState().resync?.()||(L.getState().resync?.()||(L.setState({moves:[],view:null,shots:[],reveals:[],playingShot:null,arrived:{}}),P.setState({current:null,focus:null})),I.getState().send?.('hello'))}catch(_){}},2200);return()=>clearTimeout(tm)}},[m,u,l,b,e.round,e.currentPlayer]);
 
   return (0,G.jsxs)(`div`,{
     className:`pointer-events-none absolute inset-0 p-3 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))]`,
@@ -1077,6 +1077,51 @@ var Qs=()=>Date.now(),$s=[{tray:`lines`,label:`Kalimat cepat`},{tray:`stickers`,
                       `LOG`
                     ]
                   }),
+                  (0,G.jsxs)(`div`,{
+                    title:`Latensi jaringan: ${ping||0}ms${netStatus==='reconnecting'?' (Terputus - Menghubungkan ulang)':''}`,
+                    onClick:()=>{
+                      try{
+                        I.getState().resync?.()||(
+                          L.getState().resync?.()||(
+                            L.setState({moves:[],view:null,shots:[],reveals:[],playingShot:null,arrived:{}}),
+                            P.setState({current:null,focus:null})
+                          ),
+                          I.getState().send?.("hello")
+                        );
+                      }catch(_){}
+                    },
+                    className:`px-2.5 py-1.5 rounded-xl border flex items-center gap-1.5 font-mono text-[11px] font-black cursor-pointer transition select-none ${
+                      netStatus===`reconnecting`
+                        ? `bg-rose-500/10 border-rose-500/40 text-rose-600 animate-pulse`
+                        : autoHealing
+                        ? `bg-amber-400/20 border-amber-500/40 text-amber-800`
+                        : ping>300
+                        ? `bg-rose-50 border-rose-300 text-rose-700`
+                        : ping>120
+                        ? `bg-amber-50 border-amber-300 text-amber-700`
+                        : `bg-emerald-50 border-emerald-300 text-emerald-700`
+                    }`,
+                    children:[
+                      (0,G.jsx)(`span`,{
+                        className:`size-2 rounded-full ${
+                          netStatus===`reconnecting`
+                            ? `bg-rose-500 animate-ping`
+                            : autoHealing
+                            ? `bg-amber-500 animate-spin`
+                            : ping>300
+                            ? `bg-rose-500 animate-pulse`
+                            : ping>120
+                            ? `bg-amber-500`
+                            : `bg-emerald-500`
+                        }`
+                      }),
+                      netStatus===`reconnecting`
+                        ? `Putus`
+                        : autoHealing
+                        ? `Sync...`
+                        : ping ? `${ping}ms` : `--`
+                    ]
+                  }),
                   (0,G.jsxs)(`button`,{
                     type:`button`,
                     title:`Sinkronkan ulang permainan jika tombol giliran macet`,
@@ -1125,6 +1170,16 @@ var Qs=()=>Date.now(),$s=[{tray:`lines`,label:`Kalimat cepat`},{tray:`stickers`,
         ]
       }),
       (0,G.jsx)(GameNotifications,{game:e}),
+      autoHealing&&(0,G.jsx)(`div`,{
+        className:`pointer-events-none fixed top-16 inset-x-0 mx-auto max-w-sm px-4 z-50 flex items-center justify-center animate-bounce`,
+        children:(0,G.jsxs)(`div`,{
+          className:`rounded-xl bg-amber-400 text-slate-950 font-black text-xs px-3.5 py-2 shadow-2xl border-2 border-slate-900 flex items-center gap-2`,
+          children:[
+            (0,G.jsx)(`svg`,{className:`size-4 animate-spin shrink-0`,viewBox:`0 0 24 24`,fill:`none`,stroke:`currentColor`,strokeWidth:`2.5`,strokeLinecap:`round`,strokeLinejoin:`round`,children:[(0,G.jsx)(`path`,{d:`M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67`})]}),
+            `Terdeteksi jeda, memulihkan data game otomatis...`
+          ]
+        })
+      }),
       (0,G.jsx)(gl,{}),
       !u&&(0,G.jsx)(xl,{game:e,ready:!c}),
       l&&!u&&x&&(0,G.jsx)($c,{game:e}),

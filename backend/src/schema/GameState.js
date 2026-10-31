@@ -40,6 +40,7 @@ export class GameRoomState extends Schema {
     this.code = options.code || "";
     this.status = "lobby";
     this.hostId = options.hostId || "";
+    this.deadline = 0;
     this.settings = new RoomSettings(options.settings || {});
     this.players = new MapSchema();
   }
@@ -49,6 +50,8 @@ defineTypes(GameRoomState, {
   code: "string",
   status: "string",
   hostId: "string",
+  deadline: "number",
   settings: RoomSettings,
   players: { map: Player }
 });
+
