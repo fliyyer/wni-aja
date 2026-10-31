@@ -105,10 +105,11 @@ app.get("/_vercel/insights/script.js", (req, res) => {
 // Optionally serve frontend directly if frontend directory exists
 const frontendPath = path.resolve(__dirname, "../../frontend");
 app.use(express.static(frontendPath, {
-  maxAge: "7d",
   setHeaders: (res, filePath) => {
-    if (filePath.endsWith(".glb") || filePath.endsWith(".woff") || filePath.endsWith(".jpg") || filePath.endsWith(".mp3")) {
+    if (filePath.endsWith(".glb") || filePath.endsWith(".woff") || filePath.endsWith(".woff2") || filePath.endsWith(".mp3") || filePath.endsWith(".jpg") || filePath.endsWith(".png")) {
       res.setHeader("Cache-Control", "public, max-age=604800, immutable");
+    } else if (filePath.endsWith(".js") || filePath.endsWith(".css")) {
+      res.setHeader("Cache-Control", "public, max-age=0, must-revalidate");
     } else if (filePath.endsWith("sw.js") || filePath.endsWith("index.html") || filePath.endsWith("preloader.js")) {
       res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     }
