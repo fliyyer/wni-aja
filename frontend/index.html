@@ -11,7 +11,7 @@
         });
       }
     </script>
-    <script src="/assets/preloader.js?v=2" defer></script>
+    <script src="/assets/preloader.js?v=3" defer></script>
     <script type="module" crossorigin src="/assets/index-BMG9sYTX.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/jsx-runtime-Wy9s6hX0.js">
     <link rel="stylesheet" crossorigin href="/assets/index-zEplNvKg.css">
@@ -66,6 +66,34 @@
   </head>
   <body>
     <noscript><h1>LAH LU WNI?</h1><p>Board game satir gratis di browser. Keliling 36 kota dengan modal Rp10 jt, bayar sewa, pajak, dan tol, lalu bertahan dari kartu Takdir dan Musibah. Main bergantian di satu HP atau online bareng 2–8 teman.</p><p>Aktifkan JavaScript untuk bermain.</p></noscript>
+
+    <!-- Initial Full-Screen Game Data Downloader with MB display -->
+    <div id="wni-initial-loader" style="position: fixed; inset: 0; z-index: 999999; display: flex; align-items: center; justify-content: center; background: #161412; font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; padding: 1.25rem;">
+      <div style="background: #fff8e8; color: #161412; border: 3.5px solid #161412; border-radius: 1.25rem; box-shadow: 8px 8px 0px #ffd23f, 14px 14px 0px #161412; width: 100%; max-width: 440px; overflow: hidden;">
+        <div style="background: #ffd23f; border-bottom: 3.5px solid #161412; padding: 0.6rem 1rem; display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.04em;">
+          <span>KARTU TANDA WARGA</span>
+          <span style="background: #161412; color: #ffffff; padding: 0.15rem 0.55rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 900;">SINKRONISASI</span>
+        </div>
+        <div style="padding: 1.75rem 1.5rem; text-align: center;">
+          <h1 style="font-size: 2.1rem; font-weight: 900; line-height: 1.1; margin: 0 0 0.4rem 0; letter-spacing: -0.02em;">LAH LU WNI?</h1>
+          <p style="font-size: 0.85rem; font-weight: 600; color: #64748b; margin: 0 0 1.5rem 0;">Board Game Satir Bertahan Hidup di Indonesia</p>
+
+          <div style="background: #ffffff; border: 2.5px solid #161412; border-radius: 1rem; padding: 1.15rem; box-shadow: 4px 4px 0px #161412;">
+            <div style="height: 14px; background: #e2e8f0; border: 2px solid #161412; border-radius: 9999px; overflow: hidden; margin-bottom: 0.75rem;">
+              <div id="wni-load-bar" style="height: 100%; width: 0%; background: linear-gradient(90deg, #f59e0b, #e63946); border-radius: 9999px; transition: width 0.15s ease-out;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; font-weight: 800; color: #334155; gap: 0.5rem;">
+              <span id="wni-load-status">Memeriksa data lokal...</span>
+              <span id="wni-load-mb" style="font-weight: 900; color: #e63946; white-space: nowrap; font-variant-numeric: tabular-nums;">0.0 MB / 8.6 MB (0%)</span>
+            </div>
+          </div>
+        </div>
+        <div style="border-top: 2px dashed rgba(22, 20, 18, 0.25); padding: 0.6rem 1.25rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; font-weight: 700; color: #64748b; background: rgba(0,0,0,0.02);">
+          <span>Berlaku hingga: semua aset 100% siap</span>
+          <span style="font-weight: 800; color: #161412;">🔒 SINKRON 62</span>
+        </div>
+      </div>
+    </div>
 
     <div id="root"></div>
   </body>

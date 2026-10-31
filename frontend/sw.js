@@ -1,5 +1,5 @@
 // WNI Simulator Service Worker - Cache-First for 3D Assets & Media
-const CACHE_NAME = "wni-assets-v4";
+const CACHE_NAME = "wni-assets-v5";
 
 const CACHE_MATCH_PREFIXES = [
   "/models/",
@@ -37,7 +37,13 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  const isGameAsset = CACHE_MATCH_PREFIXES.some((prefix) => url.pathname.startsWith(prefix));
+  const isGameAsset =
+    CACHE_MATCH_PREFIXES.some((prefix) => url.pathname.startsWith(prefix)) ||
+    url.pathname.endsWith(".ttf") ||
+    url.pathname.endsWith(".woff") ||
+    url.pathname.endsWith(".woff2") ||
+    url.pathname.endsWith(".glb") ||
+    url.pathname.endsWith(".mp3");
   if (!isGameAsset) {
     return;
   }
