@@ -53,14 +53,15 @@ jobs:
 
             # Auto-detect Docker Compose vs PM2
             if command -v docker &> /dev/null && [ -f "docker-compose.yml" ]; then
-              echo "Deploying via Docker Compose..."
-              docker compose down || true
-              docker compose up -d --build
+              echo "Deploying via Docker Compose (Fresh Build)..."
+              docker compose down --remove-orphans || true
+              docker compose build --no-cache
+              docker compose up -d --force-recreate
             elif command -v pm2 &> /dev/null; then
               echo "Deploying via PM2..."
               cd backend
               npm install --omit=dev
-              pm2 reload wni-simulator || pm2 start src/index.js --name "wni-simulator"
+              pm2 restart wni-simulator --update-env || pm2 start src/index.js --name "wni-simulator"
               pm2 save
             else
               echo "Starting with npm start..."
