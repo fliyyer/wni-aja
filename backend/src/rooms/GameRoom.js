@@ -184,8 +184,12 @@ export class GameRoom extends Room {
         id: this.chatHistory.length + 1,
         from: client.sessionId,
         name: player ? player.name : "Warga",
-        text: message.text || "",
+        pawn: player ? player.pawn : "emak",
+        text: message.text || (message.voiceTitle ? `🔊 ${message.voiceTitle}` : ""),
         emote: message.emote || "",
+        voice: message.voice || undefined,
+        voiceTitle: message.voiceTitle || undefined,
+        sticker: message.sticker || undefined,
         time: Date.now()
       };
       this.chatHistory.push(chatItem);
