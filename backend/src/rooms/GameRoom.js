@@ -185,12 +185,10 @@ export class GameRoom extends Room {
         from: client.sessionId,
         name: player ? player.name : "Warga",
         pawn: player ? player.pawn : "emak",
-        text: message.text || (message.voiceTitle ? `🔊 ${message.voiceTitle}` : ""),
+        text: message.text || "",
         time: Date.now()
       };
       if (message.emote) chatItem.emote = message.emote;
-      if (message.voice) chatItem.voice = message.voice;
-      if (message.voiceTitle) chatItem.voiceTitle = message.voiceTitle;
       if (message.sticker) chatItem.sticker = message.sticker;
 
       this.chatHistory.push(chatItem);
