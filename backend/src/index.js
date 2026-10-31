@@ -109,7 +109,7 @@ app.use(express.static(frontendPath, {
   setHeaders: (res, filePath) => {
     if (filePath.endsWith(".glb") || filePath.endsWith(".woff") || filePath.endsWith(".jpg") || filePath.endsWith(".mp3")) {
       res.setHeader("Cache-Control", "public, max-age=604800, immutable");
-    } else if (filePath.endsWith("sw.js") || filePath.endsWith("index.html")) {
+    } else if (filePath.endsWith("sw.js") || filePath.endsWith("index.html") || filePath.endsWith("preloader.js")) {
       res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     }
   }

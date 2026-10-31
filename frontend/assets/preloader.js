@@ -430,6 +430,24 @@
       if (gateModalEl) {
         gateModalEl.classList.remove("active");
       }
+      // Hilangkan notifikasi jika sudah 100%
+      if (!widgetEl.dataset.fading) {
+        widgetEl.dataset.fading = "true";
+        setTimeout(() => {
+          if (widgetEl) {
+            widgetEl.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+            widgetEl.style.opacity = "0";
+            widgetEl.style.transform = "translateY(20px)";
+            widgetEl.style.pointerEvents = "none";
+            setTimeout(() => {
+              if (widgetEl && widgetEl.parentNode) {
+                widgetEl.parentNode.removeChild(widgetEl);
+                widgetEl = null;
+              }
+            }, 450);
+          }
+        }, 1000);
+      }
     }
   }
 

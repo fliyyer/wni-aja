@@ -41,7 +41,7 @@ export class GameRoom extends Room {
 
       if (this.gameState) {
         client.send("update", {
-          seq: this.seq,
+          seq: this.seq++,
           game: this.gameId,
           state: this.gameState,
           events: []
@@ -204,7 +204,7 @@ export class GameRoom extends Room {
 
     if (this.gameState) {
       client.send("update", {
-        seq: this.seq,
+        seq: this.seq++,
         game: this.gameId,
         state: this.gameState,
         events: []
