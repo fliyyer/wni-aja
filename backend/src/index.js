@@ -104,7 +104,16 @@ app.get("/_vercel/insights/script.js", (req, res) => {
 
 // Optionally serve frontend directly if frontend directory exists
 const frontendPath = path.resolve(__dirname, "../../frontend");
-app.use(express.static(frontendPath));
+app.use(express.static(frontendPath, {
+  maxAge: "7d",
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith(".glb") || filePath.endsWith(".woff") || filePath.endsWith(".jpg") || filePath.endsWith(".mp3")) {
+      res.setHeader("Cache-Control", "public, max-age=604800, immutable");
+    } else if (filePath.endsWith("sw.js") || filePath.endsWith("index.html")) {
+      res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    }
+  }
+}));
 
 // Fallback for SPA routing in frontend
 app.get("*", (req, res, next) => {

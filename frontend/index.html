@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Judul, deskripsi, ikon, dan pratinjau link dari src/seo.config.ts (vite.seo.ts). -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+      }
+    </script>
     <script src="/assets/preloader.js" defer></script>
     <script type="module" crossorigin src="/assets/index-BMG9sYTX.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/jsx-runtime-Wy9s6hX0.js">
