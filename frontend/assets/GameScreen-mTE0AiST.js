@@ -905,6 +905,7 @@ var Qs=()=>Date.now(),$s=[{tray:`lines`,label:`Kalimat cepat`},{tray:`stickers`,
         disabled:e,
         "aria-label":`Kocok dadu: tahan, lalu lepas untuk melempar`,
         "data-sfx":`none`,
+        onClick:()=>{!s.current&&(p(),setTimeout(()=>m(),80))},
         onPointerDown:e=>{e.currentTarget.setPointerCapture(e.pointerId),p()},
         onPointerUp:()=>m(),
         onPointerCancel:()=>m(!0),
@@ -982,9 +983,9 @@ var Qs=()=>Date.now(),$s=[{tray:`lines`,label:`Kalimat cepat`},{tray:`stickers`,
       g=e.phase===`awaiting_dice`?`dice:${h}`:null,
       [_,v]=(0,U.useState)(null),
       y=g!==null&&_===g,
-      b=e.phase===`pre_roll`||y,
+      b=e.phase===`pre_roll`||y||(e.phase===`awaiting_dice`&&(!e.pending||(e.pending.kind!==`dice`&&e.pending.kind!==`card`))),
       x=e.moneyRequests.length>0||e.trade!==null,
-      activePlayerName=e.players[e.currentPlayer]?.name||`Pemain`;
+      activePlayerName=e.players[e.currentPlayer]?.name||`Pemain`;(0,U.useEffect)(()=>{if(m&&!u&&(!l||!b)){let tm=setTimeout(()=>{try{console.warn('[AutoSync] Giliran aktif tertahan, sinkronkan ulang...');I.getState().resync?.()||(L.getState().resync?.()||(L.setState({moves:[],view:null,shots:[],reveals:[],playingShot:null,arrived:{}}),P.setState({current:null,focus:null})),I.getState().send?.('hello'))}catch(_){}},2200);return()=>clearTimeout(tm)}},[m,u,l,b,e.round,e.currentPlayer]);
 
   return (0,G.jsxs)(`div`,{
     className:`pointer-events-none absolute inset-0 p-3 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))]`,
@@ -1074,6 +1075,26 @@ var Qs=()=>Date.now(),$s=[{tray:`lines`,label:`Kalimat cepat`},{tray:`stickers`,
                     children:[
                       (0,G.jsx)(`svg`,{className:`size-3.5 text-slate-700 shrink-0`,viewBox:`0 0 24 24`,fill:`none`,stroke:`currentColor`,strokeWidth:`2`,strokeLinecap:`round`,strokeLinejoin:`round`,children:[(0,G.jsx)(`path`,{d:`M15 12h-5`}),(0,G.jsx)(`path`,{d:`M15 8h-5`}),(0,G.jsx)(`path`,{d:`M19 17V5a2 2 0 0 0-2-2H4`}),(0,G.jsx)(`path`,{d:`M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 0 1-2 2z`}),(0,G.jsx)(`path`,{d:`M4 19a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2`})]}),
                       `LOG`
+                    ]
+                  }),
+                  (0,G.jsxs)(`button`,{
+                    type:`button`,
+                    title:`Sinkronkan ulang permainan jika tombol giliran macet`,
+                    onClick:()=>{
+                      try{
+                        I.getState().resync?.()||(
+                          L.getState().resync?.()||(
+                            L.setState({moves:[],view:null,shots:[],reveals:[],playingShot:null,arrived:{}}),
+                            P.setState({current:null,focus:null})
+                          ),
+                          I.getState().send?.("hello")
+                        );
+                      }catch(err){console.error(err)}
+                    },
+                    className:`px-2.5 sm:px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs flex items-center gap-1.5 transition cursor-pointer active:scale-95 shadow-sm`,
+                    children:[
+                      (0,G.jsx)(`svg`,{className:`size-3.5 shrink-0 animate-[spin_4s_linear_infinite]`,viewBox:`0 0 24 24`,fill:`none`,stroke:`currentColor`,strokeWidth:`2.5`,strokeLinecap:`round`,strokeLinejoin:`round`,children:[(0,G.jsx)(`path`,{d:`M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67`})]}),
+                      `SINKRON`
                     ]
                   }),
                   (0,G.jsxs)(`button`,{
