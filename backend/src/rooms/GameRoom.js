@@ -200,11 +200,127 @@ export class GameRoom extends Room {
     console.log(`[GameRoom] Room created: ${this.roomId}`);
   }
 
+  remapPlayerId(oldId, newId) {
+    if (!this.gameState || !this.gameState.players || !this.gameState.players[oldId] || oldId === newId) return;
+
+    const p = this.gameState.players[oldId];
+    delete this.gameState.players[oldId];
+    p.id = newId;
+    this.gameState.players[newId] = p;
+
+    if (this.gameState.currentPlayer === oldId) {
+      this.gameState.currentPlayer = newId;
+    }
+    this.gameState.turnOrder = this.gameState.turnOrder.map(id => id === oldId ? newId : id);
+    this.gameState.bankruptOrder = this.gameState.bankruptOrder.map(id => id === oldId ? newId : id);
+    this.gameState.ranking = this.gameState.ranking.map(id => id === oldId ? newId : id);
+
+    for (const tile in this.gameState.properties) {
+      if (this.gameState.properties[tile].owner === oldId) {
+        this.gameState.properties[tile].owner = newId;
+      }
+    }
+
+    for (const loan of this.gameState.loans) {
+      if (loan.borrower === oldId) loan.borrower = newId;
+      if (loan.lender === oldId) loan.lender = newId;
+    }
+
+    for (const req of this.gameState.moneyRequests) {
+      if (req.from === oldId) req.from = newId;
+      if (req.to === oldId) req.to = newId;
+    }
+
+    if (this.gameState.trade) {
+      if (this.gameState.trade.from === oldId) this.gameState.trade.from = newId;
+      if (this.gameState.trade.to === oldId) this.gameState.trade.to = newId;
+    }
+
+    if (this.gameState.pending) {
+      if (this.gameState.pending.playerId === oldId) this.gameState.pending.playerId = newId;
+      if (this.gameState.pending.insured === oldId) this.gameState.pending.insured = newId;
+      if (Array.isArray(this.gameState.pending.options)) {
+        this.gameState.pending.options = this.gameState.pending.options.map(o => o === oldId ? newId : o);
+      }
+      if (Array.isArray(this.gameState.pending.offers)) {
+        for (const off of this.gameState.pending.offers) {
+          if (off.lender === oldId) off.lender = newId;
+        }
+      }
+    }
+  }
+
   onJoin(client, options) {
     console.log(`[GameRoom] Client joined: ${client.sessionId} in room ${this.roomId}`);
 
     if (!this.state.hostId) {
       this.state.hostId = client.sessionId;
+    }
+
+    // Jika permainan sedang berlangsung, cek apakah klien ini menghubungkan kembali ke kursi pemain yang terputus
+    if (this.state.status === "game" && this.gameState) {
+      let matchedPlayer = null;
+      let matchedOldSessionId = null;
+
+      // 1. Cek pemain terputus dengan nama atau bidak yang sama
+      for (const [sId, p] of this.state.players.entries()) {
+        if (!p.connected && this.gameState.players && this.gameState.players[sId]) {
+          const matchName = options.name && p.name && p.name.trim().toLowerCase() === options.name.trim().toLowerCase();
+          const matchPawn = options.pawn && p.pawn === options.pawn;
+          if (matchName || matchPawn) {
+            matchedPlayer = p;
+            matchedOldSessionId = sId;
+            break;
+          }
+        }
+      }
+
+      // 2. Jika belum cocok, cari pemain terputus mana pun di game ini
+      if (!matchedPlayer) {
+        for (const [sId, p] of this.state.players.entries()) {
+          if (!p.connected && this.gameState.players && this.gameState.players[sId]) {
+            matchedPlayer = p;
+            matchedOldSessionId = sId;
+            break;
+          }
+        }
+      }
+
+      if (matchedPlayer && matchedOldSessionId) {
+        console.log(`[GameRoom] Re-associating reconnected client ${client.sessionId} with player seat ${matchedOldSessionId} (${matchedPlayer.name})`);
+        
+        // Pindahkan entri player di this.state.players ke sessionId baru
+        this.state.players.delete(matchedOldSessionId);
+        matchedPlayer.id = client.sessionId;
+        matchedPlayer.connected = true;
+        this.state.players.set(client.sessionId, matchedPlayer);
+
+        if (this.state.hostId === matchedOldSessionId) {
+          this.state.hostId = client.sessionId;
+        }
+
+        // Remap seluruh referensi gameState ke sessionId baru
+        this.remapPlayerId(matchedOldSessionId, client.sessionId);
+
+        client.send("welcome", {
+          playerId: client.sessionId,
+          serverTime: Date.now(),
+          chat: this.chatHistory
+        });
+
+        // Broadcast pembaruan status ke semua pemain agar state tersinkronisasi
+        this.broadcast("update", {
+          seq: this.seq++,
+          game: this.gameId,
+          state: this.gameState,
+          events: []
+        });
+
+        if (this.gameState.currentPlayer === client.sessionId) {
+          this.resetTurnTimer();
+        }
+        return;
+      }
     }
 
     const existingPawns = Array.from(this.state.players.values()).map(p => p.pawn);
@@ -273,6 +389,9 @@ export class GameRoom extends Room {
         if (!consented) {
           await this.allowReconnection(client, 120); // 120 seconds reconnection window
           if (player) player.connected = true;
+          if (this.gameState && this.gameState.currentPlayer === client.sessionId) {
+            this.resetTurnTimer();
+          }
           return;
         }
       } catch {
