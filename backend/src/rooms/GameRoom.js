@@ -299,6 +299,25 @@ export class GameRoom extends Room {
           this.state.hostId = client.sessionId;
         }
 
+        if (this._reconnections) {
+          for (const [tok, rec] of Object.entries(this._reconnections)) {
+            if (rec && rec[0] === matchedOldSessionId) {
+              try { rec[1].reject("reconnected_via_new_session"); } catch {}
+              delete this._reconnections[tok];
+            }
+          }
+        }
+        if (this.reservedSeats) {
+          delete this.reservedSeats[matchedOldSessionId];
+        }
+        if (this.reservedSeatTimeouts) {
+          clearTimeout(this.reservedSeatTimeouts[matchedOldSessionId]);
+          delete this.reservedSeatTimeouts[matchedOldSessionId];
+        }
+        if (this._reconnectingSessionId) {
+          this._reconnectingSessionId.delete(matchedOldSessionId);
+        }
+
         // Remap seluruh referensi gameState ke sessionId baru
         this.remapPlayerId(matchedOldSessionId, client.sessionId);
 
@@ -354,7 +373,7 @@ export class GameRoom extends Room {
   }
 
   async onLeave(client, consented) {
-    console.log(`[GameRoom] Client left: ${client.sessionId}, consented: ${consented}`);
+    console.log(`[GameRoom] Client left: ${client.sessionId}, token: ${client._reconnectionToken}, consented: ${consented}`);
     const player = this.state.players.get(client.sessionId);
 
     if (this.state.status === "lobby") {
